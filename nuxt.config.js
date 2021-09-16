@@ -71,9 +71,10 @@ export default {
     strategies: {
       primary: {
         scheme: "local",
-        /*headers: {
-          Authorization: "Basic " + Buffer.from(process.env.API_CLIENT_ID + ":" + process.env.API_CLIENT_SECRET).toString('base64')
-        },*/
+        /*responseType: 'token',
+        clientId: process.env.API_CLIENT_ID,
+        clientSecret: process.env.API_CLIENT_SECRET,
+        grantType: 'password',*/
         user: {
           property: '',
           autoFetch: true,

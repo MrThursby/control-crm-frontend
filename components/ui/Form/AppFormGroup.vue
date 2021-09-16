@@ -20,7 +20,7 @@ export default {
   name: "AppFormGroup",
   props: {
     label: { type: String, default: "" },
-    errors: { type: Array, default: [] }
+    errors: { type: Array, default: () => ([]) }
   }
 }
 </script>

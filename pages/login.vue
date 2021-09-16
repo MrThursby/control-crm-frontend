@@ -60,6 +60,9 @@ export default {
         if (e.response.data.error === 'invalid_grant'){
           this.error = 'Неверный логин или пароль'
         }
+        else {
+          this.error = 'Неизвестная ошибка, попробуйте позже'
+        }
       })
     }
   },
