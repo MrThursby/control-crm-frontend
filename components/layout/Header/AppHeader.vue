@@ -1,7 +1,7 @@
 <template>
   <header class="border-b border-black border-opacity-20">
     <app-container class="items-center h-16 hidden md:flex">
-      <app-header-search-form
+      <search-form
         @submit="submitSearchForm"
         v-model="search"
       />
@@ -17,7 +17,7 @@
         >
           <fa-icon class="text-xl" icon="search" />
         </button>
-        <app-header-search-form
+        <search-form
           @submit="submitSearchForm"
           @blur="mobileSearchOpened = false"
           v-focus="mobileSearchOpened"
@@ -56,8 +56,8 @@
 import AppContainer from "../Container/AppContainer";
 import AppInput from "../../ui/Form/AppInput";
 import AppLink from "../../ui/Links/AppLink";
-import AppHeaderSearchForm from "./AppHeaderSearchForm";
 import focus from 'vue-focus'
+import SearchForm from "../../ui/Form/SearchForm";
 export default {
   name: "AppHeader",
   data() { return {
@@ -79,7 +79,7 @@ export default {
     },
   },
   directives: {focus},
-  components: {AppHeaderSearchForm, AppLink, AppInput, AppContainer}
+  components: {SearchForm, AppLink, AppInput, AppContainer}
 }
 </script>
 

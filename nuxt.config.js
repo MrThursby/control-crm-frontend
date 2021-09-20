@@ -8,22 +8,22 @@ export default {
       lang: 'en'
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: ''},
+      {name: 'format-detection', content: 'telephone=no'}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~plugins/datepicker.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -33,6 +33,10 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    ['@nuxtjs/moment', {
+      defaultLocale: 'ru',
+      locales: ['ru']
+    }],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -89,9 +93,9 @@ export default {
           maxAge: 60 * 60 * 24 * 30
         },
         endpoints: {
-          login: { url: '/oauth/token', method: 'post', property: 'access_token' },
+          login: {url: '/oauth/token', method: 'post', property: 'access_token'},
           logout: false,
-          user: { url: '/api/user', method: 'get' },
+          user: {url: '/api/user', method: 'get'},
         },
       }
     }
@@ -112,6 +116,5 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {}
 }

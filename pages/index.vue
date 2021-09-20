@@ -3,13 +3,10 @@
     <div
       class="flex justify-center gap-5"
     >
-      <app-btn rounded="md" py="2">Сегодня</app-btn>
-      <app-btn rounded="md" py="2">Неделя</app-btn>
-      <app-btn rounded="md" py="2">Месяц</app-btn>
-      <app-btn rounded="md" py="2">Выбрать</app-btn>
-<!--      <app-btn rounded="lg">Неделя</app-btn>
-      <app-btn rounded="lg">Месяц</app-btn>
-      <app-btn rounded="lg">Выбрать</app-btn>-->
+      <page-nav>Сегодня</page-nav>
+      <page-nav>Неделя</page-nav>
+      <page-nav>Месяц</page-nav>
+      <page-nav>Выбрать</page-nav>
     </div>
   </app-container>
 </template>
@@ -17,7 +14,8 @@
 <script>
 import AppContainer from "../components/layout/Container/AppContainer";
 import AppBtn from "../components/ui/Buttons/AppBtn";
+import PageNav from "../components/ui/PageNav/PageNav";
 export default {
-  components: {AppBtn, AppContainer}
+  components: {PageNav, AppBtn, AppContainer}
 }
 </script>

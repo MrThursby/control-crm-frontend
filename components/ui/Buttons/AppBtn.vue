@@ -1,6 +1,6 @@
 <template>
   <component
-    class="bg-primary px-4 py-3"
+    class="bg-primary font-semibold"
     :class="`rounded-${rounded} px-${px} py-${py}`"
     :is="tag"
   >
@@ -13,9 +13,9 @@ export default {
   name: "AppBtn",
   props: {
     tag: { type: String, default: 'button' },
-    rounded: { type: String, default: 'full' },
-    px: { type: String, default: '6' },
-    py: { type: String, default: '4' },
+    rounded: { type: String, default: 'md' },
+    px: { type: String, default: '4' },
+    py: { type: String, default: '3' },
   }
 }
 </script>

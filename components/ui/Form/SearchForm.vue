@@ -1,0 +1,52 @@
+<template>
+  <div class="relative">
+    <fa-icon
+      class="absolute h-full mx-4 text-sm pt-px transition duration-150"
+      :class="{
+              'text-light': focused,
+              'text-primary': !focused,
+            }"
+      icon="search"
+    />
+    <app-input
+      @input="$emit('input', value)"
+      v-model="value"
+      v-focus="focused"
+      :h="md ? 8 : 12"
+      @focus="() => { this.focused = true; this.$emit('focus') }"
+      @blur="() => { this.focused = false; this.$emit('blur') }"
+      class="pl-10"
+      :class="`rounded-${rounded}`"
+    />
+  </div>
+</template>
+
+<script>
+import focus from 'vue-focus';
+import AppInput from "./AppInput";
+
+export default {
+  name: "SearchForm",
+  data() {
+    return {
+      focused: false,
+      value: ''
+    }
+  },
+  mounted() {
+    this.$on('focus', () => {
+      this.focused = true
+    })
+  },
+  props: {
+    md: {type: Boolean, default: false},
+    rounded: {type: String, default: 'full'},
+  },
+  directives: {focus},
+  components: {AppInput}
+}
+</script>
+
+<style scoped>
+
+</style>
