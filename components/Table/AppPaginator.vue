@@ -1,11 +1,11 @@
 <template>
-  <div class="flex justify-around flex-wrap gap-4">
-    <app-btn @click="() => changePage(value - 1)" :disabled="value === 1">Предыдущая</app-btn>
+  <div class="flex justify-center flex-wrap gap-4">
+    <app-btn @click="() => changePage(value - 1)" :disabled="value <= 1">Предыдущая</app-btn>
     <div class="flex gap-4">
       <app-select up :value="perPage" @input="changePerPage" :options="perPageOptions"></app-select>
-      <app-select up :value="value - 1" @input="changePage" :options="options"></app-select>
+      <app-select up :value="value - 1" @input="changePage($event + 1)" :options="pages"></app-select>
     </div>
-    <app-btn @click="() => changePage(value + 1)" :disabled="value === options.length - 1">Следующая</app-btn>
+    <app-btn @click="() => changePage(value + 1)" :disabled="value >= pages.length">Следующая</app-btn>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   name: "AppPaginator",
   components: {AppBtn, AppSelect},
   computed: {
-    options() {
+    pages() {
       let options = []
       for(let i = 1; i <= this.count; i++){
         options.push({

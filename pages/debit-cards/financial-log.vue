@@ -2,6 +2,17 @@
   <app-container>
     <cards-nav class="mb-8" />
 
+    <page-filters class="flex flex-wrap">
+      <page-filters-item class="mr-auto">
+        <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.search" rounded="md" />
+      </page-filters-item>
+
+
+      <page-filters-item>
+        <app-datepicker v-model="filters.range" @input="() => { this.page = 1; reFetch() }" />
+      </page-filters-item>
+    </page-filters>
+
     <app-table class="mb-4">
       <app-t-head>
         <app-table-h-row>
@@ -46,6 +57,11 @@ import AppTableHCell from "../../components/Table/AppTableHCell";
 import AppTableRow from "../../components/Table/AppTableRow";
 import AppTableCell from "../../components/Table/AppTableCell";
 import AppPaginator from "../../components/Table/AppPaginator";
+import PageFilters from "../../components/ui/PageFilters/PageFilters";
+import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
+import AppSelect from "../../components/ui/Form/AppSelect";
+import SearchForm from "../../components/ui/Form/SearchForm";
+import AppDatepicker from "../../components/ui/Form/AppDatepicker";
 export default {
   name: "CardFinancialLog",
   async fetch({store}) {
@@ -91,6 +107,11 @@ export default {
     },
   },
   components: {
+    AppDatepicker,
+    SearchForm,
+    AppSelect,
+    PageFiltersItem,
+    PageFilters,
     AppPaginator,
     AppTableCell,
     AppTableRow, AppTableHCell, AppTableHRow, AppTBody, AppTHead, AppTable, CardsNav, AppContainer}

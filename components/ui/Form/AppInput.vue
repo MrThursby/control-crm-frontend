@@ -6,7 +6,7 @@
     :value="value"
     :placeholder="placeholder"
 
-    :mask="mask"
+    :mask="mask || false"
     :unmask="unmask"
 
     @focus="$emit('focus')"
@@ -27,7 +27,7 @@ export default {
     placeholder: { type: String, default: '' },
     px: { type: Number, default: 4 },
     h: { type: Number, default: 12 },
-    mask: true,
+    mask: { default: () => { return { lazy: true } } },
     unmask: { type: Boolean, default: false }
   },
   components: {

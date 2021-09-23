@@ -2,8 +2,8 @@ export const state = () => ({
   menu: [
     { to: '/', title: 'home', icon: ['fas', 'home'], exact: true },
     { to: '/debit-cards', title: 'debit-cards', icon: ['fas', 'credit-card'], exact: false },
-    { to: '/sim-bank', title: 'sim-bank', icon: ['fa', 'sim-card'], exact: false },
-    { to: '/exchange', title: 'phone-numbers', icon: ['fa', 'exchange-alt'], exact: false },
+    { to: '/phone-numbers', title: 'phone-numbers', icon: ['fa', 'sim-card'], exact: false },
+    { to: '/exchange', title: 'exchange', icon: ['fa', 'exchange-alt'], exact: false },
   ],
   perPage: 0,
   perPageOptions: [

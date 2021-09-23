@@ -7,19 +7,26 @@
             'border-transparent': !opened
           }"
     >
-      <span class="font-semibold">Выбрать период</span>
+      <span class="font-semibold">
+        {{
+          range.startDate === null || range.endDate === null
+            ? 'Выбрать период'
+            : `${$moment(range.startDate).format('LL')} - ${$moment(range.endDate).format('LL')}`
+        }}
+      </span>
+
       <span
         class="transform transition duration-200"
         :class="{ 'rotate-180': opened }"
-      ><img src="~assets/arrow.svg" alt="Open" /></span>
+      ><img src="~assets/arrow.svg" alt="Open"/></span>
     </div>
     <date-range-picker
       key="datepicker"
       v-show="opened"
       locale="ru"
       class="top-14 absolute right-0 text-black bg-dark z-20"
-      :from="$moment(range.startDate).format()"
-      :to="$moment(range.endDate).format()"
+      :from="range.startDate ? $moment(range.startDate).format() : null"
+      :to="range.endDate ? $moment(range.endDate).format() : null"
       :panel="range.panel"
       @update="update"
       @reset="reset"
@@ -32,8 +39,8 @@ export default {
   name: "AppDatepicker",
   data: () => ({
     range: {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: null,
+      endDate: null,
     },
     opened: false
   }),
@@ -43,16 +50,14 @@ export default {
       this.range.endDate = values.to
       this.range.panel = values.panel
       this.$refs.pickerWrapper.blur()
-      this.makeEvent()
+      this.$emit('input', [this.range.startDate, this.range.endDate])
     },
     reset() {
-      this.range.startDate = new Date()
-      this.range.endDate = new Date()
+      this.range.startDate = null
+      this.range.endDate = null
+      this.$refs.pickerWrapper.blur()
       this.$emit('input', [])
     },
-    makeEvent() {
-      this.$emit('input', [this.range.startDate, this.range.endDate])
-    }
   },
 }
 </script>

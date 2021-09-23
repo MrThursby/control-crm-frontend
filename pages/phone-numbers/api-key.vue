@@ -4,7 +4,7 @@
 
     <page-filters class="flex flex-wrap">
       <page-filters-item class="mr-auto">
-        <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.search" rounded="md" />
+        <search-form v-model="filters.search" rounded="md" />
       </page-filters-item>
 
       <page-filters-item>
@@ -16,28 +16,20 @@
       <app-t-head>
         <app-table-h-row>
           <app-table-h-cell center>#</app-table-h-cell>
-          <app-table-h-cell>Номер</app-table-h-cell>
           <app-table-h-cell>API-ключ</app-table-h-cell>
+          <app-table-h-cell>App ID</app-table-h-cell>
           <app-table-h-cell>Добавлено</app-table-h-cell>
         </app-table-h-row>
       </app-t-head>
       <app-t-body>
-        <app-table-row v-for="(item, index) of phone_numbers.data" :key="index">
+        <app-table-row v-for="(item, index) of api_keys.data" :key="index">
           <app-table-cell center>{{ item.id }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.phone }}</app-table-cell>
-          <app-table-cell>{{ item.api_keys.api_key }}</app-table-cell>
+          <app-table-cell nowrap>{{ item.api_key }}</app-table-cell>
+          <app-table-cell>{{ item.app_id }}</app-table-cell>
           <app-table-cell>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
       </app-t-body>
     </app-table>
-
-    <app-paginator
-      class="mb-4"
-      :count="phone_numbers.last_page"
-      v-model="page"
-      @input="reFetch"
-      @perPageUpdated="() => { this.page = 1; reFetch() }"
-    />
   </app-container>
 </template>
 
@@ -55,12 +47,11 @@ import AppTableHCell from "../../components/Table/AppTableHCell";
 import AppTBody from "../../components/Table/AppTBody";
 import AppTableRow from "../../components/Table/AppTableRow";
 import AppTableCell from "../../components/Table/AppTableCell";
-import AppPaginator from "../../components/Table/AppPaginator";
 export default {
-  name: "PhoneNumbersIndex",
+  name: "index",
   async fetch({ store }) {
     let perPageOptions = store.getters["app/perPageOptions"]
-    await store.dispatch('phone-numbers/fetchPhoneNumbers', { per_page: perPageOptions[store.getters["app/perPage"]].id });
+    await store.dispatch('phone-numbers/fetchApiKeys', { per_page: perPageOptions[store.getters["app/perPage"]].id });
   },
   data() {
     return {
@@ -70,26 +61,9 @@ export default {
       }
     }
   },
-  methods: {
-    async reFetch(page) {
-      this.page = page || this.page
-
-      let filters = {}
-
-      if (this.filters.search !== '') {
-        filters.search = this.filters.search
-      }
-
-      await this.$store.dispatch('phone-numbers/fetchPhoneNumbers', {
-        per_page: this.perPageOptions[this.perPage].id,
-        page: this.page,
-        ...filters
-      })
-    }
-  },
   computed: {
-    phone_numbers() {
-      return this.$store.getters["phone-numbers/phone_numbers"]
+    api_keys() {
+      return this.$store.getters["phone-numbers/api_keys"]
     },
     perPage() {
       return this.$store.getters['app/perPage']
@@ -99,7 +73,6 @@ export default {
     },
   },
   components: {
-    AppPaginator,
     AppTableCell,
     AppTableRow,
     AppTBody,
