@@ -22,6 +22,7 @@
       :to="$moment(range.endDate).format()"
       :panel="range.panel"
       @update="update"
+      @reset="reset"
     />
   </div>
 </template>
@@ -43,6 +44,11 @@ export default {
       this.range.panel = values.panel
       this.$refs.pickerWrapper.blur()
       this.makeEvent()
+    },
+    reset() {
+      this.range.startDate = new Date()
+      this.range.endDate = new Date()
+      this.$emit('input', [])
     },
     makeEvent() {
       this.$emit('input', [this.range.startDate, this.range.endDate])

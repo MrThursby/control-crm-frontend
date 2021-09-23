@@ -1,5 +1,12 @@
 module.exports = {
-  purge: [],
+  purge: {
+    options: {
+      safeList: [
+        'rounded-full',
+        'mx-auto'
+      ]
+    }
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {

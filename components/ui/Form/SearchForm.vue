@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <form @submit.prevent="$emit('submit')" class="relative">
     <fa-icon
       class="absolute h-full mx-4 text-sm pt-px transition duration-150"
       :class="{
@@ -18,7 +18,7 @@
       class="pl-10"
       :class="`rounded-${rounded}`"
     />
-  </div>
+  </form>
 </template>
 
 <script>

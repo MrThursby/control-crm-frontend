@@ -2,7 +2,7 @@
   <div class="flex">
     <app-nav-bar class="fixed w-16 pt-16 h-screen flex-shrink-0 hidden md:flex" />
     <main class="flex md:ml-16 flex-col w-full bg-dark text-light min-h-screen">
-      <app-header />
+      <app-header class="mb-12" />
       <nuxt />
     </main>
   </div>

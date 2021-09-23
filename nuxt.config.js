@@ -1,6 +1,12 @@
 require("dotenv").config();
 
 export default {
+  loading: {
+    color: '#6556ff',
+    height: '4px',
+    duration: 5000,
+    continuous: true,
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'control-crm-frontend',
@@ -23,7 +29,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~plugins/datepicker.js'
+    '~plugins/datepicker.js',
+    '~plugins/vuelidate.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -33,10 +40,11 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/composition-api/module',
     ['@nuxtjs/moment', {
       defaultLocale: 'ru',
       locales: ['ru']
-    }],
+    }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

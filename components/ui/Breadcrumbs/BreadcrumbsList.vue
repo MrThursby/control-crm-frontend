@@ -1,12 +1,12 @@
 <template>
-  <div class="flex justify-end">
+  <ul class="flex gap-4">
     <slot />
-  </div>
+  </ul>
 </template>
 
 <script>
 export default {
-  name: "PageFilters"
+  name: "BreadcrumbsList"
 }
 </script>
 

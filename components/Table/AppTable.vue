@@ -1,7 +1,9 @@
 <template>
-  <table class="min-w-full table-auto relative">
-    <slot />
-  </table>
+  <div class="w-full overflow-y-auto">
+    <table class="min-w-full table-auto relative">
+      <slot/>
+    </table>
+  </div>
 </template>
 
 <script>
