@@ -72,6 +72,10 @@ export default {
       target: `${process.env.API_URL}/`,
       changeOrigin: true,
     },
+    '/sanctum': {
+      target: `${process.env.API_URL}/`,
+      changeOrigin: true,
+    },
   },
 
   auth: {
