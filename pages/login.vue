@@ -47,7 +47,7 @@ export default {
     }
   },
   mounted() {
-    this.$axios.$get(`${process.env.API_URL}/sanctum/csrf-cookie`);
+    this.$axios.$get(`/sanctum/csrf-cookie`);
   },
   methods: {
     async submit() {
