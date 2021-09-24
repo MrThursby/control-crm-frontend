@@ -4,6 +4,7 @@
       <search-form
         @submit="submitSearchForm"
         v-model="search"
+        rounded-full
       />
       <div class="w-full text-right">
         <app-link tag="button" @click="handleLogout" variant="danger">Выйти</app-link>

@@ -1,7 +1,6 @@
 <template>
   <div
-    class="container px-4"
-    :class="`mx-${mx}`"
+    class="container px-4 mx-auto"
   >
     <slot />
   </div>
@@ -10,9 +9,6 @@
 <script>
 export default {
   name: "AppContainer",
-  props: {
-    mx: { type: String, default: 'auto' }
-  }
 }
 </script>
 

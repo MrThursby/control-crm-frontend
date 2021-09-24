@@ -2,7 +2,7 @@
   <app-container>
     <page-filters class="flex flex-wrap">
       <page-filters-item class="mr-auto">
-        <search-form v-model="filters.search" rounded="md" />
+        <search-form v-model="filters.search" />
       </page-filters-item>
 
       <page-filters-item>

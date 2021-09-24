@@ -16,7 +16,7 @@
       @focus="() => { this.focused = true; this.$emit('focus') }"
       @blur="() => { this.focused = false; this.$emit('blur') }"
       class="pl-10"
-      :class="`rounded-${rounded}`"
+      :class="{'rounded-full': roundedFull}"
     />
   </form>
 </template>
@@ -40,7 +40,7 @@ export default {
   },
   props: {
     md: {type: Boolean, default: false},
-    rounded: {type: String, default: 'full'},
+    roundedFull: {type: Boolean, default: false },
   },
   directives: {focus},
   components: {AppInput}
