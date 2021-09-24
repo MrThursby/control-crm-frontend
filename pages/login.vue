@@ -46,22 +46,21 @@ export default {
       }
     }
   },
+  mounted() {
+    this.$axios.$get(`${process.env.API_URL}/sanctum/csrf-cookie`);
+  },
   methods: {
     async submit() {
-      await this.$auth.loginWith('primary', {
+      await this.$auth.loginWith('local', {
         data: {
           ...this.form,
-          client_id: process.env.API_CLIENT_ID,
-          client_secret: process.env.API_CLIENT_SECRET,
-          grant_type: 'password'
+          device_name: navigator.userAgent
         }
-      })
-      .catch(e => {
-        if (e.response.data.error === 'invalid_grant'){
+      }).then(() => {
+        this.$router.push('/')
+      }).catch(e => {
+        if (e.code === 422) {
           this.error = 'Неверный логин или пароль'
-        }
-        else {
-          this.error = 'Неизвестная ошибка, попробуйте позже'
         }
       })
     }

@@ -60,6 +60,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
+    credentials: true,
   },
 
   proxy: {
@@ -67,7 +68,7 @@ export default {
       target: `${process.env.API_URL}/`,
       changeOrigin: true
     },
-    '/oauth': {
+    '/auth': {
       target: `${process.env.API_URL}/`,
       changeOrigin: true,
     },
@@ -81,30 +82,13 @@ export default {
       home: '/'
     },
     strategies: {
-      primary: {
-        scheme: "local",
-        /*responseType: 'token',
-        clientId: process.env.API_CLIENT_ID,
-        clientSecret: process.env.API_CLIENT_SECRET,
-        grantType: 'password',*/
-        user: {
-          property: '',
-          autoFetch: true,
-        },
-        token: {
-          property: 'access_token',
-          type: 'Bearer',
-          maxAge: 1800
-        },
-        refreshToken: {
-          property: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 30
-        },
+      local: {
+        url: process.env.API_URL,
         endpoints: {
-          login: {url: '/oauth/token', method: 'post', property: 'access_token'},
-          logout: false,
-          user: {url: '/api/user', method: 'get'},
-        },
+          login: { url: '/auth/login', method: 'post', propertyName: false },
+          user: { url: '/api/user', method: 'get', propertyName: 'user' },
+          logout: false
+        }
       }
     }
   },
