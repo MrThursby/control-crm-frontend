@@ -4,23 +4,26 @@
       <span class="block mb-2">{{ label }}</span>
       <slot />
     </label>
-    <div v-if="errors.length !== 0" class="mt-2">
-      <div
-        class="text-danger"
+    <div v-if="invalid" class="mt-2">
+      <app-form-group-error
         v-for="(error, index) of errors"
         :key="index">
         {{ error }}
-      </div>
+      </app-form-group-error>
+      <slot name="errors" />
     </div>
   </div>
 </template>
 
 <script>
+import AppFormGroupError from "./AppFormGroupError";
 export default {
   name: "AppFormGroup",
+  components: {AppFormGroupError},
   props: {
     label: { type: String, default: "" },
-    errors: { type: Array, default: () => ([]) }
+    errors: { type: Array, default: () => ([]) },
+    invalid: { type: Boolean, default: false }
   }
 }
 </script>

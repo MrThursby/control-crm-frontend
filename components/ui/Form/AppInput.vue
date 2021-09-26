@@ -1,7 +1,11 @@
 <template>
   <mask-input
-    class="bg-white rounded w-full text-sm bg-opacity-5 focus:outline-none focus:bg-black focus:bg-opacity-30 border border-transparent focus:border-primary transition duration-150"
-    :class="`px-${px} h-${h}`"
+    class="bg-white rounded w-full text-sm bg-opacity-5 focus:outline-none focus:bg-black focus:bg-opacity-30 border transition duration-150"
+    :class="[
+      `px-${px} h-${h}`,
+      { 'border-red-600': invalid },
+      { 'border-transparent focus:border-primary': !invalid },
+    ]"
     :type="type"
     :value="value"
     :placeholder="placeholder"
@@ -28,7 +32,8 @@ export default {
     px: { type: Number, default: 4 },
     h: { type: Number, default: 12 },
     mask: { default: () => { return { lazy: true } } },
-    unmask: { type: Boolean, default: false }
+    unmask: { type: Boolean, default: false },
+    invalid: { type: Boolean, default: false }
   },
   components: {
     'mask-input': IMaskComponent
