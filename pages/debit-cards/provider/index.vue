@@ -23,7 +23,9 @@
       <app-t-body>
         <app-table-row v-for="(item, index) of providers.data" :key="index">
           <app-table-cell center>{{ item.id }}</app-table-cell>
-          <app-table-cell>{{ item.title }}</app-table-cell>
+          <app-table-cell>
+            <app-link :to="`/debit-cards/provider/${item.id}`">{{ item.title }}</app-link>
+          </app-table-cell>
           <app-table-cell>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
       </app-t-body>
@@ -40,20 +42,21 @@
 </template>
 
 <script>
-import AppContainer from "../../components/layout/Container/AppContainer";
-import CardsNav from "../../components/pages/Cards/CardsNav";
-import AppTable from "../../components/Table/AppTable";
-import AppTHead from "../../components/Table/AppTHead";
-import AppTableHRow from "../../components/Table/AppTableHRow";
-import AppTableHCell from "../../components/Table/AppTableHCell";
-import AppTableCell from "../../components/Table/AppTableCell";
-import AppTableRow from "../../components/Table/AppTableRow";
-import AppTBody from "../../components/Table/AppTBody";
-import PageFilters from "../../components/ui/PageFilters/PageFilters";
-import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
-import SearchForm from "../../components/ui/Form/SearchForm";
-import AppBtn from "../../components/ui/Buttons/AppBtn";
-import AppPaginator from "../../components/Table/AppPaginator";
+import AppContainer from "../../../components/layout/Container/AppContainer";
+import CardsNav from "../../../components/pages/Cards/CardsNav";
+import AppTable from "../../../components/Table/AppTable";
+import AppTHead from "../../../components/Table/AppTHead";
+import AppTableHRow from "../../../components/Table/AppTableHRow";
+import AppTableHCell from "../../../components/Table/AppTableHCell";
+import AppTableCell from "../../../components/Table/AppTableCell";
+import AppTableRow from "../../../components/Table/AppTableRow";
+import AppTBody from "../../../components/Table/AppTBody";
+import PageFilters from "../../../components/ui/PageFilters/PageFilters";
+import PageFiltersItem from "../../../components/ui/PageFilters/PageFiltersItem";
+import SearchForm from "../../../components/ui/Form/SearchForm";
+import AppBtn from "../../../components/ui/Buttons/AppBtn";
+import AppPaginator from "../../../components/Table/AppPaginator";
+import AppLink from "../../../components/ui/Links/AppLink";
 export default {
   name: "CardProvider",
   async fetch({ store }) {
@@ -97,6 +100,7 @@ export default {
     },
   },
   components: {
+    AppLink,
     AppPaginator,
     AppBtn,
     SearchForm,

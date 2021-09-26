@@ -4,8 +4,15 @@ export const state = () => ({
   banks: [],
   providers: [],
   projects: [],
-  regex: [],
+  regexes: [],
+
   selectsData: {},
+
+  card: {},
+  bank: {},
+  project: {},
+  provider: {},
+  regex: {},
 })
 
 export const mutations = {
@@ -24,12 +31,29 @@ export const mutations = {
   setProjects(state, projects) {
     state.projects = projects
   },
-  setRegex(state, regex) {
-    state.regex = regex
+  setRegexes(state, regexes) {
+    state.regexes = regexes
   },
   setSelectsData(state, data) {
     state.selectsData = data
-  }
+  },
+
+
+  setCard(state, card) {
+    state.card = card
+  },
+  setBank(state, bank) {
+    state.bank = bank
+  },
+  setProject(state, card) {
+    state.card = card
+  },
+  setProvider(state, card) {
+    state.card = card
+  },
+  setRegex(state, card) {
+    state.card = card
+  },
 }
 
 export const actions = {
@@ -44,7 +68,6 @@ export const actions = {
     selectsData.statuses = cards.quantityStatuses
     commit("setSelectsData", cards.data)
   },
-
   async fetchFinLog({ commit }, params) {
     let qs = require('qs')
     params = qs.stringify(params)
@@ -52,7 +75,6 @@ export const actions = {
     let finLog = await this.$axios.$get(`/api/admin/finlog?${params}`)
     commit("setFinLog", finLog.FinLogs)
   },
-
   async fetchBanks({ commit }, params) {
     let qs = require('qs')
     params = qs.stringify(params)
@@ -60,7 +82,6 @@ export const actions = {
     let banks = await this.$axios.$get(`/api/admin/bank?${params}`)
     commit("setBanks", banks.banks)
   },
-
   async fetchProviders({ commit }, params) {
     let qs = require('qs')
     params = qs.stringify(params)
@@ -68,7 +89,6 @@ export const actions = {
     let providers = await this.$axios.$get(`/api/admin/provider?${params}`)
     commit("setProviders", providers.providers)
   },
-
   async fetchProjects({ commit }, params) {
     let qs = require('qs')
     params = qs.stringify(params)
@@ -76,22 +96,42 @@ export const actions = {
     let projects = await this.$axios.$get(`/api/admin/project?${params}`)
     commit("setProjects", projects.projects)
   },
-
-  async fetchRegex({ commit }, params) {
+  async fetchRegexes({ commit }, params) {
     let qs = require('qs')
     params = qs.stringify(params)
 
-    let regex = await this.$axios.$get(`/api/admin/regex-bank?${params}`)
-    commit("setRegex", regex.regexBanks)
+    let regexes = await this.$axios.$get(`/api/admin/regex-bank?${params}`)
+    commit("setRegexes", regexes.regexBanks)
   },
-
   async fetchSelectsData({ commit }) {
     let data = await this.$axios.$get(`/api/admin/card/create`)
 
     let selectsData = data.data
     selectsData.statuses = data.statuses
     commit("setSelectsData", selectsData)
-  }
+  },
+
+
+  async fetchCard({ commit }, id) {
+    let cards = await this.$axios.$get(`/api/admin/card/${id}`)
+    commit("setCard", cards.card)
+  },
+  async fetchBank({ commit }, id) {
+    let bank = await this.$axios.$get(`/api/admin/bank/${id}`)
+    commit("setBank", bank.bank)
+  },
+  async fetchProvider({ commit }, id) {
+    let cards = await this.$axios.$get(`/api/admin/provider/${id}`)
+    commit("setProvider", cards.provider)
+  },
+  async fetchProject({ commit }, id) {
+    let cards = await this.$axios.$get(`/api/admin/project/${id}`)
+    commit("setProject", cards.project)
+  },
+  async fetchRegex({ commit }, id) {
+    let cards = await this.$axios.$get(`/api/admin/regex-bank/${id}`)
+    commit("setRegex", cards.regexBank)
+  },
 }
 
 export const getters = {
@@ -100,6 +140,13 @@ export const getters = {
   banks: state => state.banks,
   providers: state => state.providers,
   projects: state => state.projects,
-  regex: state => state.regex,
+  regexes: state => state.regexes,
+
   selectsData: state => state.selectsData,
+
+  card: state => state.card,
+  bank: state => state.bank,
+  project: state => state.card,
+  provider: state => state.card,
+  regex: state => state.card,
 }

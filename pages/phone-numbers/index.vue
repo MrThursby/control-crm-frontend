@@ -24,7 +24,9 @@
       <app-t-body>
         <app-table-row v-for="(item, index) of phone_numbers.data" :key="index">
           <app-table-cell center>{{ item.id }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.phone }}</app-table-cell>
+          <app-table-cell nowrap>
+            <app-link :to="`/phone-numbers/${item.id}`">{{ item.phone }}</app-link>
+          </app-table-cell>
           <app-table-cell>{{ item.api_keys.api_key }}</app-table-cell>
           <app-table-cell>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
@@ -56,6 +58,7 @@ import AppTBody from "../../components/Table/AppTBody";
 import AppTableRow from "../../components/Table/AppTableRow";
 import AppTableCell from "../../components/Table/AppTableCell";
 import AppPaginator from "../../components/Table/AppPaginator";
+import AppLink from "../../components/ui/Links/AppLink";
 export default {
   name: "PhoneNumbersIndex",
   async fetch({ store }) {
@@ -99,6 +102,7 @@ export default {
     },
   },
   components: {
+    AppLink,
     AppPaginator,
     AppTableCell,
     AppTableRow,

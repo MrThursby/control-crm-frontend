@@ -72,7 +72,9 @@
       <app-t-body>
         <app-table-row v-for="(item, index) of cards.data" :key="index">
           <app-table-cell center>{{ item.id }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.card }}</app-table-cell>
+          <app-table-cell nowrap>
+            <app-link :to="`/debit-cards/${item.id}`">{{ item.card }}</app-link>
+          </app-table-cell>
           <app-table-cell>{{ item.banks.title }}</app-table-cell>
           <app-table-cell>{{ item.providers.title }}</app-table-cell>
           <app-table-cell>{{ item.projects.title }}</app-table-cell>
@@ -110,6 +112,7 @@ import AppSelect from "../../components/ui/Form/AppSelect";
 import AppDatepicker from "../../components/ui/Form/AppDatepicker";
 import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
 import AppPaginator from "../../components/Table/AppPaginator";
+import AppLink from "../../components/ui/Links/AppLink";
 
 export default {
   name: "CardIndex",
@@ -185,6 +188,7 @@ export default {
     },
   },
   components: {
+    AppLink,
     AppPaginator,
     PageFiltersItem,
     AppDatepicker,

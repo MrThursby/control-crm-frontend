@@ -24,7 +24,9 @@
       <app-t-body>
         <app-table-row v-for="(item, index) of api_keys.data" :key="index">
           <app-table-cell center>{{ item.id }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.api_key }}</app-table-cell>
+          <app-table-cell nowrap>
+            <app-link :to="`/phone-numbers/api-key/${item.id}`">{{ item.api_key }}</app-link>
+          </app-table-cell>
           <app-table-cell>{{ item.app_id }}</app-table-cell>
           <app-table-cell>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
@@ -34,19 +36,20 @@
 </template>
 
 <script>
-import AppContainer from "../../components/layout/Container/AppContainer";
-import PhoneNumbersNav from "../../components/pages/PhoneNumbers/PhoneNumbersNav";
-import PageFilters from "../../components/ui/PageFilters/PageFilters";
-import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
-import SearchForm from "../../components/ui/Form/SearchForm";
-import AppBtn from "../../components/ui/Buttons/AppBtn";
-import AppTable from "../../components/Table/AppTable";
-import AppTHead from "../../components/Table/AppTHead";
-import AppTableHRow from "../../components/Table/AppTableHRow";
-import AppTableHCell from "../../components/Table/AppTableHCell";
-import AppTBody from "../../components/Table/AppTBody";
-import AppTableRow from "../../components/Table/AppTableRow";
-import AppTableCell from "../../components/Table/AppTableCell";
+import AppContainer from "../../../components/layout/Container/AppContainer";
+import PhoneNumbersNav from "../../../components/pages/PhoneNumbers/PhoneNumbersNav";
+import PageFilters from "../../../components/ui/PageFilters/PageFilters";
+import PageFiltersItem from "../../../components/ui/PageFilters/PageFiltersItem";
+import SearchForm from "../../../components/ui/Form/SearchForm";
+import AppBtn from "../../../components/ui/Buttons/AppBtn";
+import AppTable from "../../../components/Table/AppTable";
+import AppTHead from "../../../components/Table/AppTHead";
+import AppTableHRow from "../../../components/Table/AppTableHRow";
+import AppTableHCell from "../../../components/Table/AppTableHCell";
+import AppTBody from "../../../components/Table/AppTBody";
+import AppTableRow from "../../../components/Table/AppTableRow";
+import AppTableCell from "../../../components/Table/AppTableCell";
+import AppLink from "../../../components/ui/Links/AppLink";
 export default {
   name: "index",
   async fetch({ store }) {
@@ -73,6 +76,7 @@ export default {
     },
   },
   components: {
+    AppLink,
     AppTableCell,
     AppTableRow,
     AppTBody,

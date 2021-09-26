@@ -126,13 +126,13 @@
 </template>
 
 <script>
-import AppContainer from "../../../components/layout/Container/AppContainer";
-import AppFormGroup from "../../../components/ui/Form/AppFormGroup";
-import AppInput from "../../../components/ui/Form/AppInput";
-import AppSelect from "../../../components/ui/Form/AppSelect";
-import AppBtn from "../../../components/ui/Buttons/AppBtn";
-import BreadcrumbsList from "../../../components/ui/Breadcrumbs/BreadcrumbsList";
-import BreadcrumbsItem from "../../../components/ui/Breadcrumbs/BreadcrumbsItem";
+import AppContainer from "../../components/layout/Container/AppContainer";
+import AppFormGroup from "../../components/ui/Form/AppFormGroup";
+import AppInput from "../../components/ui/Form/AppInput";
+import AppSelect from "../../components/ui/Form/AppSelect";
+import AppBtn from "../../components/ui/Buttons/AppBtn";
+import BreadcrumbsList from "../../components/ui/Breadcrumbs/BreadcrumbsList";
+import BreadcrumbsItem from "../../components/ui/Breadcrumbs/BreadcrumbsItem";
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, minValue, maxValue, email, numeric, url } from 'vuelidate/lib/validators';
 

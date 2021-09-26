@@ -47,21 +47,21 @@
 </template>
 
 <script>
-import AppContainer from "../../components/layout/Container/AppContainer";
-import CardsNav from "../../components/pages/Cards/CardsNav";
-import AppTable from "../../components/Table/AppTable";
-import AppTHead from "../../components/Table/AppTHead";
-import AppTBody from "../../components/Table/AppTBody";
-import AppTableHRow from "../../components/Table/AppTableHRow";
-import AppTableHCell from "../../components/Table/AppTableHCell";
-import AppTableRow from "../../components/Table/AppTableRow";
-import AppTableCell from "../../components/Table/AppTableCell";
-import AppPaginator from "../../components/Table/AppPaginator";
-import PageFilters from "../../components/ui/PageFilters/PageFilters";
-import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
-import AppSelect from "../../components/ui/Form/AppSelect";
-import SearchForm from "../../components/ui/Form/SearchForm";
-import AppDatepicker from "../../components/ui/Form/AppDatepicker";
+import AppContainer from "../../../components/layout/Container/AppContainer";
+import CardsNav from "../../../components/pages/Cards/CardsNav";
+import AppTable from "../../../components/Table/AppTable";
+import AppTHead from "../../../components/Table/AppTHead";
+import AppTBody from "../../../components/Table/AppTBody";
+import AppTableHRow from "../../../components/Table/AppTableHRow";
+import AppTableHCell from "../../../components/Table/AppTableHCell";
+import AppTableRow from "../../../components/Table/AppTableRow";
+import AppTableCell from "../../../components/Table/AppTableCell";
+import AppPaginator from "../../../components/Table/AppPaginator";
+import PageFilters from "../../../components/ui/PageFilters/PageFilters";
+import PageFiltersItem from "../../../components/ui/PageFilters/PageFiltersItem";
+import AppSelect from "../../../components/ui/Form/AppSelect";
+import SearchForm from "../../../components/ui/Form/SearchForm";
+import AppDatepicker from "../../../components/ui/Form/AppDatepicker";
 export default {
   name: "CardFinancialLog",
   async fetch({store}) {

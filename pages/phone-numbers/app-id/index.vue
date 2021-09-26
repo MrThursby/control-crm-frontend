@@ -37,19 +37,19 @@
 </template>
 
 <script>
-import AppContainer from "../../components/layout/Container/AppContainer";
-import PhoneNumbersNav from "../../components/pages/PhoneNumbers/PhoneNumbersNav";
-import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
-import SearchForm from "../../components/ui/Form/SearchForm";
-import PageFilters from "../../components/ui/PageFilters/PageFilters";
-import AppBtn from "../../components/ui/Buttons/AppBtn";
-import AppTable from "../../components/Table/AppTable";
-import AppTHead from "../../components/Table/AppTHead";
-import AppTableHRow from "../../components/Table/AppTableHRow";
-import AppTableHCell from "../../components/Table/AppTableHCell";
-import AppTBody from "../../components/Table/AppTBody";
-import AppTableRow from "../../components/Table/AppTableRow";
-import AppTableCell from "../../components/Table/AppTableCell";
+import AppContainer from "../../../components/layout/Container/AppContainer";
+import PhoneNumbersNav from "../../../components/pages/PhoneNumbers/PhoneNumbersNav";
+import PageFiltersItem from "../../../components/ui/PageFilters/PageFiltersItem";
+import SearchForm from "../../../components/ui/Form/SearchForm";
+import PageFilters from "../../../components/ui/PageFilters/PageFilters";
+import AppBtn from "../../../components/ui/Buttons/AppBtn";
+import AppTable from "../../../components/Table/AppTable";
+import AppTHead from "../../../components/Table/AppTHead";
+import AppTableHRow from "../../../components/Table/AppTableHRow";
+import AppTableHCell from "../../../components/Table/AppTableHCell";
+import AppTBody from "../../../components/Table/AppTBody";
+import AppTableRow from "../../../components/Table/AppTableRow";
+import AppTableCell from "../../../components/Table/AppTableCell";
 export default {
   name: "index",
   data() {

@@ -1,9 +1,9 @@
 <template>
   <component
+    class="underline"
     :is="tag"
     :to="to"
     :href="to"
-    @click.prevent="$emit('click')"
   >
     <slot />
   </component>

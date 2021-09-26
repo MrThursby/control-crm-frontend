@@ -2,6 +2,10 @@ export const state = () => ({
   phone_numbers: [],
   api_keys: [],
   app_ids: [],
+
+  phone_number: {},
+  api_key: {},
+  app_id: {},
 })
 
 export const mutations = {
@@ -13,6 +17,16 @@ export const mutations = {
   },
   setAppIds(state, app_ids) {
     state.app_ids = app_ids
+  },
+
+  setPhoneNumber(state, phone_number) {
+    state.phone_number = phone_number
+  },
+  setApiKey(state, api_key) {
+    state.api_key = api_key
+  },
+  setAppId(state, app_id) {
+    state.app_id = app_id
   },
 }
 
@@ -38,10 +52,27 @@ export const actions = {
     let providers = await this.$axios.$get(`/api/admin/provider?${params}`)
     commit("setProviders", providers.providers)
   },*/
+
+  async fetchPhoneNumber({ commit }, id) {
+    let phone_number = await this.$axios.$get(`/api/admin/phone/${id}`)
+    commit("setPhoneNumber", phone_number.phone)
+  },
+  async fetchApiKey({ commit }, id) {
+    let api_key = await this.$axios.$get(`/api/admin/api-key/${id}`)
+    commit("setApiKey", api_key.apiKey)
+  },
+/*  async fetchAppId({ commit }, id) {
+    let app_id = await this.$axios.$get(`/api/admin/app/${id}`)
+    commit("setAppId", app_id.app_id)
+  },*/
 }
 
 export const getters = {
   phone_numbers: state => state.phone_numbers,
   api_keys: state => state.api_keys,
   app_ids: state => state.app_ids,
+
+  phone_number: state => state.phone_number,
+  api_key: state => state.api_key,
+  app_id: state => state.app_id,
 }
