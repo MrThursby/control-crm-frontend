@@ -1,5 +1,5 @@
 <template>
-  <header class="border-b border-black border-opacity-20">
+  <header class="border-b border-black border-opacity-20 z-10">
     <app-container class="items-center h-16 hidden md:flex">
       <search-form
         @submit="submitSearchForm"

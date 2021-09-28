@@ -7,7 +7,7 @@
             'border-transparent': !opened
           }"
     >
-      <span class="font-semibold">
+      <span class="font-semibold mr-auto">
         {{
           range.startDate === null || range.endDate === null
             ? 'Выбрать период'
