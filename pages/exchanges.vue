@@ -10,7 +10,7 @@
           v-model="filters.status"
           :options="[
             { id: 0, title: 'Любой статус' },
-          ]/*.concat(selectsData.statuses)*/"
+          ].concat(statuses.data)"
         />
       </page-filters-item>
 
@@ -59,8 +59,12 @@ import AppTableRow from "../components/Table/AppTableRow";
 import AppTableCell from "../components/Table/AppTableCell";
 import AppSelect from "../components/ui/Form/AppSelect";
 import AppDatepicker from "../components/ui/Form/AppDatepicker";
+import {mapGetters} from "vuex";
 export default {
   name: "exchange",
+  async fetch({ store }) {
+    await store.dispatch('cards/statuses/fetchPaginator')
+  },
   data() {
     return {
       filters: {
@@ -70,9 +74,9 @@ export default {
     }
   },
   computed: {
-    providers() {
-      return this.$store.getters["debit-cards/providers"]
-    }
+    ...mapGetters({
+      statuses: 'cards/statuses/paginator'
+    })
   },
   components: {
     AppDatepicker,
