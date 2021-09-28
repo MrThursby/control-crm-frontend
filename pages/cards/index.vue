@@ -160,16 +160,16 @@ export default {
         filters.date = this.filters.range
       }
       if (this.filters.status !== 0) {
-        filters.status_id = this.statuses[this.filters.status - 1].id
+        filters.status_id = this.statuses.data[this.filters.status - 1].id
       }
       if (this.filters.bank !== 0) {
-        filters.bank_id = this.banks[this.filters.bank - 1].id
+        filters.bank_id = this.banks.data[this.filters.bank - 1].id
       }
       if (this.filters.project !== 0) {
-        filters.project_id = this.projects[this.filters.project - 1].id
+        filters.project_id = this.projects.data[this.filters.project - 1].id
       }
       if (this.filters.provider !== 0) {
-        filters.provider_id = this.providers[this.filters.provider - 1].id
+        filters.provider_id = this.providers.data[this.filters.provider - 1].id
       }
       if (this.filters.search !== '') {
         filters.search = this.filters.search
