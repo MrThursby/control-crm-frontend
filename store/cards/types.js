@@ -1,23 +1,23 @@
 export const state = () => ({
-  paginator: {}
+  list: []
 })
 
 export const mutations = {
-  setPaginator(state, paginator) {
-    state.paginator = paginator
+  setList(state, list) {
+    state.list = list
   }
 }
 
 export const actions = {
-  async fetchPaginator({ commit }, params) {
+  async fetchList({ commit }, params) {
     let qs = require('qs')
     params = qs.stringify(params)
 
-    let paginator = await this.$axios.$get(`/api/admin/regex-banks/types?${params}`)
-    commit("setPaginator", paginator.data)
+    let list = await this.$axios.$get(`/api/admin/regex-banks/types?${params}`)
+    commit("setList", list.data)
   },
 }
 
 export const getters = {
-  paginator: state => state.paginator
+  list: state => state.list
 }

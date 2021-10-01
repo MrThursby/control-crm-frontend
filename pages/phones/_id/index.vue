@@ -16,7 +16,7 @@
       </info-col>
     </info-list>
 
-    <app-btn class="mr-4">Редактировать</app-btn>
+    <app-btn @click="$router.push(`/phones/${$route.params.id}/edit`)" class="mr-4">Редактировать</app-btn>
     <app-btn danger>Удалить</app-btn>
   </app-container>
 </template>
