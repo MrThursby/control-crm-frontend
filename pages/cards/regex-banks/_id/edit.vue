@@ -13,7 +13,7 @@
       <breadcrumbs-item :to="`/cards/regex-banks/${$route.params.id}`">
         Регулярка #{{ $route.params.id }}
       </breadcrumbs-item>
-      <breadcrumbs-item to="/cards/regex-banks/create">
+      <breadcrumbs-item :to="`/cards/regex-banks/${$route.params.id}/edit`">
         Редактировать
       </breadcrumbs-item>
     </breadcrumbs-list>
@@ -68,7 +68,7 @@
     </div>
     <div>
       <app-form-group>
-        <app-btn @click="submit">Добавить</app-btn>
+        <app-btn @click="submit">Сохранить</app-btn>
       </app-form-group>
     </div>
   </app-container>
@@ -115,8 +115,14 @@ export default {
   },
   mounted() {
     this.form.regex = this.item.regex
-    this.form.type = this.types.findIndex(type => type.id === this.item.type)
-    this.form.bank = this.banks.findIndex(bank => bank.id === this.item.bank)
+
+    let type = this.types.findIndex(type => type.id === this.item.type)
+    type = type === -1 ? 0 : type
+    this.form.type = type
+
+    let bank = this.banks.data.findIndex(bank => bank.id === this.item.bank)
+    bank = bank === -1 ? 0 : bank
+    this.form.bank = bank
   },
   methods: {
     async submit() {
@@ -126,12 +132,14 @@ export default {
         return false;
       }
 
-      let formData = new FormData()
+      let formData = new URLSearchParams()
       formData.append('regex', this.form.regex)
-      formData.append('type', this.form.type)
+      formData.append('type', this.types[this.form.type].id)
       formData.append('bank_id', this.banks.data[this.form.bank].id)
 
-      await this.$axios.$put(`/api/admin/regex-banks/${this.$route.params.id}`, formData)
+      await this.$axios.$put(`/api/admin/regex-banks/${this.$route.params.id}`, formData, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
         .then(r => {
           this.$router.push(`/cards/regex-banks/${r.data.id}`)
         })
@@ -147,9 +155,19 @@ export default {
     ...mapGetters({
       item: 'cards/regex-banks/item',
 
-      banks: 'cards/banks/paginator',
+      banks_getter: 'cards/banks/paginator',
       types: 'cards/types/list'
-    })
+    }),
+    banks() {
+      if(this.banks_getter.data.findIndex(bank => bank.id === this.item.bank) === -1){
+        let banks = JSON.parse(JSON.stringify(this.banks_getter))
+        banks.data = [this.item.bank, ...banks.data]
+
+        return banks
+      }
+
+      return this.banks_getter
+    }
   },
   components: {
     AppFormGroupError,

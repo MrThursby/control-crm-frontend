@@ -11,7 +11,7 @@
       <h1 class="text-bold text-2xl mb-4">Информация</h1>
       <info-col>
         <info-item name="Номер">{{ phone.phone }}</info-item>
-        <info-item name="API-ключ">{{ phone.api_key_id }}</info-item>
+        <info-item name="API-ключ">{{ phone.api_key.api_key }}</info-item>
         <info-item name="Добавлено">{{ $moment(phone.created_at).format('LLL') }}</info-item>
       </info-col>
     </info-list>

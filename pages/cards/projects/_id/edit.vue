@@ -35,7 +35,7 @@
             <app-form-group-error v-if="!$v.form.title.required">
               Это обязательное поле
             </app-form-group-error>
-            <app-form-group-error v-if="!$v.form.title.minLength || $v.form.title.maxLength">
+            <app-form-group-error v-if="!$v.form.title.minLength || !$v.form.title.maxLength">
               Поле должно содержать от 1 до 255 символов
             </app-form-group-error>
           </template>
@@ -98,10 +98,12 @@ export default {
         return false;
       }
 
-      let formData = new FormData()
+      let formData = new URLSearchParams()
       formData.append('title', this.form.title)
 
-      await this.$axios.$put(`/api/admin/projects/${this.$route.params.id}`, formData)
+      await this.$axios.$put(`/api/admin/projects/${this.$route.params.id}`, formData, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
         .then(r => {
           this.$router.push(`/cards/projects/${r.data.id}`)
         })

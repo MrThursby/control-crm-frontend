@@ -35,7 +35,6 @@
       </div>
     </info-list>
 
-    <app-btn class="mr-4">Редактировать</app-btn>
     <app-btn danger>Удалить</app-btn>
   </app-container>
 </template>

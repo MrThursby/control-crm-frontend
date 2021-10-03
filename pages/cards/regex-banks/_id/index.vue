@@ -12,7 +12,7 @@
       <h1 class="text-bold text-2xl mb-4">Информация</h1>
       <info-col>
         <info-item name="Регулярка">{{ regex_bank.regex }}</info-item>
-        <info-item name="Банк">{{ regex_bank.bank_id }}</info-item>
+        <info-item name="Банк">{{ regex_bank.bank.title }}</info-item>
         <info-item name="Добавлено">{{ $moment(regex_bank.created_at).format('LLL') }}</info-item>
       </info-col>
     </info-list>

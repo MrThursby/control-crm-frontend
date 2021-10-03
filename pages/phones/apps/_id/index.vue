@@ -2,7 +2,7 @@
   <app-container>
     <breadcrumbs-list class="mb-8">
       <breadcrumbs-item to="/">Главная</breadcrumbs-item>
-      <breadcrumbs-item to="/phones">Дебетовые карты</breadcrumbs-item>
+      <breadcrumbs-item to="/phones">Номера</breadcrumbs-item>
       <breadcrumbs-item to="/phones/apps">App ID</breadcrumbs-item>
       <breadcrumbs-item :to="`/phones/apps/${$route.params.id}`">App ID #{{ $route.params.id }}</breadcrumbs-item>
     </breadcrumbs-list>
@@ -16,7 +16,7 @@
       </info-col>
     </info-list>
 
-    <app-btn class="mr-4">Редактировать</app-btn>
+    <app-btn @click="$router.push(`/phones/apps/${$route.params.id}/edit`)" class="mr-4">Редактировать</app-btn>
     <app-btn danger>Удалить</app-btn>
   </app-container>
 </template>

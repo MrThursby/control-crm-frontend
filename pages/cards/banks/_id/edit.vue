@@ -35,7 +35,7 @@
             <app-form-group-error v-if="!$v.form.title.required">
               Это обязательное поле
             </app-form-group-error>
-            <app-form-group-error v-if="!$v.form.title.minLength || $v.form.title.maxLength">
+            <app-form-group-error v-if="!$v.form.title.minLength || !$v.form.title.maxLength">
               Поле должно содержать от 1 до 255 символов
             </app-form-group-error>
           </template>
@@ -56,7 +56,7 @@
             <app-form-group-error v-if="!$v.form.api_name.required">
               Это обязательное поле
             </app-form-group-error>
-            <app-form-group-error v-if="!$v.form.api_name.minLength || $v.form.api_name.maxLength">
+            <app-form-group-error v-if="!$v.form.api_name.minLength || !$v.form.api_name.maxLength">
               Поле должно содержать от 1 до 255 символов
             </app-form-group-error>
           </template>
@@ -123,11 +123,13 @@ export default {
         return false;
       }
 
-      let formData = new FormData()
+      let formData = new URLSearchParams()
       formData.append('title', this.form.title)
       formData.append('api_name', this.form.api_name)
 
-      await this.$axios.$put(`/api/admin/banks/${this.$route.params.id}`, formData)
+      await this.$axios.$put(`/api/admin/banks/${this.$route.params.id}`, formData, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
         .then(r => {
           this.$router.push(`/cards/banks/${r.data.id}`)
         })

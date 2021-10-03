@@ -43,52 +43,52 @@
         <app-form-group
           class="mb-4"
           label="Статус"
-          :invalid="errors.status.length !== 0"
-          :errors="errors.status"
+          :invalid="errors.status_id.length !== 0"
+          :errors="errors.status_id"
         >
           <app-select
             v-model="form.status"
             :options="statuses.data"
-            :invalid="errors.status.length !== 0"
+            :invalid="errors.status_id.length !== 0"
           />
         </app-form-group>
 
         <app-form-group
           class="mb-4"
           label="Банк"
-          :invalid="errors.bank.length !== 0"
-          :errors="errors.bank"
+          :invalid="errors.bank_id.length !== 0"
+          :errors="errors.bank_id"
         >
           <app-select
             v-model="form.bank"
             :options="banks.data"
-            :invalid="errors.bank.length !== 0"
+            :invalid="errors.bank_id.length !== 0"
           />
         </app-form-group>
 
         <app-form-group
           class="mb-4"
           label="Поставщик"
-          :invalid="errors.provider.length !== 0"
-          :errors="errors.provider"
+          :invalid="errors.provider_id.length !== 0"
+          :errors="errors.provider_id"
         >
           <app-select
-            v-model="form.provider"
+            v-model="form.provider_id"
             :options="providers.data"
-            :invalid="errors.provider.length !== 0"
+            :invalid="errors.provider_id.length !== 0"
           />
         </app-form-group>
 
         <app-form-group
           class="mb-4"
           label="Проект"
-          :invalid="errors.project.length !== 0"
-          :errors="errors.project"
+          :invalid="errors.project_id.length !== 0"
+          :errors="errors.project_id"
         >
           <app-select
-            v-model="form.project"
+            v-model="form.project_id"
             :options="projects.data"
-            :invalid="errors.project.length !== 0"
+            :invalid="errors.project_id.length !== 0"
           />
         </app-form-group>
       </div>
@@ -262,6 +262,7 @@ export default {
   data() {
     return {
       form: {
+        card: '',
         status: 0,
         bank: 0,
         provider: 0,
@@ -276,10 +277,10 @@ export default {
       },
       errors: {
         card: [],
-        status: [],
-        bank: [],
-        provider: [],
-        project: [],
+        status_id: [],
+        bank_id: [],
+        provider_id: [],
+        project_id: [],
         fio: [],
         phone: [],
         login: [],
@@ -304,9 +305,23 @@ export default {
   },
   mounted() {
     this.form.card = this.item.card
-    this.form.provider = this.item.provider.id
-    this.form.bank = this.item.bank.id
-    this.form.project = this.item.project.id
+
+    let provider = this.providers.data.findIndex(provider => provider.id === this.item.provider.id)
+    provider = provider === -1 ? 0 : provider
+    this.form.provider = provider
+
+    let bank = this.banks.data.findIndex(bank => bank.id === this.item.bank.id)
+    bank = bank === -1 ? 0 : bank
+    this.form.bank = bank
+
+    let project = this.projects.data.findIndex(project => project.id === this.item.project.id)
+    project = project === -1 ? 0 : project
+    this.form.project = project
+
+    let status = this.statuses.data.findIndex(status => status.id === this.item.status.id)
+    status = status === -1 ? 0 : project
+    this.form.status = status
+
     this.form.fio = this.item.fio
     this.form.phone = this.item.phone
     this.form.login = this.item.login
@@ -319,11 +334,11 @@ export default {
     async submit() {
       this.$v.form.$touch()
 
-      if(this.$v.$invalid) {
+      if (this.$v.$invalid) {
         return false;
       }
 
-      let formData = new FormData()
+      let formData = new URLSearchParams()
       formData.append('card', this.form.card)
       formData.append('fio', this.form.fio)
       formData.append('phone', this.form.phone)
@@ -337,8 +352,25 @@ export default {
       formData.append('bank_id', this.banks.data[this.form.bank].id)
       formData.append('provider_id', this.providers.data[this.form.provider].id)
       formData.append('project_id', this.projects.data[this.form.project].id)
+      /*let formData = {
+        card: this.form.card,
+        fio: this.form.fio,
+        phone: this.form.phone,
+        login: this.form.login,
+        password_ib: this.form.password_ib,
+        codeword: this.form.codeword,
+        link_photo: this.form.link_photo,
+        comment: this.form.comment,
 
-      await this.$axios.$put(`/api/admin/cards/${this.$route.params.id}`, formData)
+        status_id: this.statuses.data[this.form.status].id,
+        bank_id: this.banks.data[this.form.bank].id,
+        provider_id: this.providers.data[this.form.provider].id,
+        project_id: this.projects.data[this.form.project].id,
+      }*/
+
+      await this.$axios.$put(`/api/admin/cards/${this.$route.params.id}`, formData, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      })
         .then(r => {
           this.$router.push(`/cards/${r.data.id}`)
         })
@@ -352,11 +384,43 @@ export default {
   computed: {
     ...mapGetters({
       item: 'cards/item',
-      providers: 'cards/providers/paginator',
-      projects: 'cards/projects/paginator',
-      statuses: 'cards/statuses/paginator',
-      banks: 'cards/banks/paginator',
-    })
+      providers_getter: 'cards/providers/paginator',
+      projects_getter: 'cards/projects/paginator',
+      statuses_getter: 'cards/statuses/paginator',
+      banks_getter: 'cards/banks/paginator',
+    }),
+    banks() {
+      if(this.banks_getter.data.findIndex(bank => bank.id === this.item.bank.id) === -1){
+        let banks = JSON.parse(JSON.stringify(this.banks_getter))
+        banks.data = [this.item.bank, ...banks.data]
+        return banks
+      }
+      return this.banks_getter
+    },
+    projects() {
+      if(this.projects_getter.data.findIndex(project => project.id === this.item.project.id) === -1){
+        let projects = JSON.parse(JSON.stringify(this.projects_getter))
+        projects.data = [this.item.project, ...projects.data]
+        return projects
+      }
+      return this.projects_getter
+    },
+    statuses() {
+      if(this.statuses_getter.data.findIndex(status => status.id === this.item.status.id) === -1){
+        let statuses = JSON.parse(JSON.stringify(this.statuses_getter))
+        statuses.data = [this.item.status, ...statuses.data]
+        return statuses
+      }
+      return this.statuses_getter
+    },
+    providers() {
+      if(this.providers_getter.data.findIndex(provider => provider.id === this.item.provider.id) === -1){
+        let providers = JSON.parse(JSON.stringify(this.providers_getter))
+        providers.data = [this.item.provider, ...providers.data]
+        return providers
+      }
+      return this.providers_getter
+    }
   },
   components: {
     AppFormGroupError,

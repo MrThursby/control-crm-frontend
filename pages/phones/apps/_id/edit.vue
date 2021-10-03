@@ -2,18 +2,18 @@
   <app-container>
     <breadcrumbs-list class="mb-8">
       <breadcrumbs-item to="/">
-        Консоль
+        Главная
       </breadcrumbs-item>
-      <breadcrumbs-item to="/cards">
-        Дебетовые карты
+      <breadcrumbs-item to="/phones">
+        Номера
       </breadcrumbs-item>
-      <breadcrumbs-item to="/cards/providers">
-        Поставщики
+      <breadcrumbs-item to="/phones/apps">
+        App ID
       </breadcrumbs-item>
-      <breadcrumbs-item :to="`/cards/providers/${$route.params.id}`">
-        Поставщик #{{ $route.params.id }}
+      <breadcrumbs-item :to="`/phones/apps/${$route.params.id}`">
+        App ID #{{ $route.params.id }}
       </breadcrumbs-item>
-      <breadcrumbs-item :to="`/cards/providers/${$route.params.id}/edit`">
+      <breadcrumbs-item :to="`/phones/apps/${$route.params.id}/edit`">
         Редактировать
       </breadcrumbs-item>
     </breadcrumbs-list>
@@ -22,21 +22,23 @@
       <div class="w-full md:w-1/2 lg:w-1/3">
         <app-form-group
           class="mb-4"
-          label="Название поставщика"
-          :errors="errors.title"
-          :invalid="errors.title.length !== 0 || $v.form.title.$error"
+          label="Номер"
+          :errors="errors.phone"
+          :invalid="errors.phone.length !== 0 || $v.form.phone.$error"
         >
           <app-input
-            v-model="form.title"
-            :invalid="errors.title.length !== 0 || $v.form.title.$error"
-            @input="$v.form.title.$touch"
+            unmask
+            :mask="'+{7}(000)000-00-00'"
+            v-model="form.phone"
+            :invalid="errors.phone.length !== 0 || $v.form.phone.$error"
+            @input="$v.form.phone.$touch"
           />
           <template #errors>
-            <app-form-group-error v-if="!$v.form.title.required">
+            <app-form-group-error v-if="!$v.form.phone.required">
               Это обязательное поле
             </app-form-group-error>
-            <app-form-group-error v-if="!$v.form.title.minLength || !$v.form.title.maxLength">
-              Поле должно содержать от 1 до 255 символов
+            <app-form-group-error v-if="!$v.form.phone.numeric || !$v.form.phone.minValue || $v.form.phone.maxValue">
+              Это поле должно создержать номер телефона
             </app-form-group-error>
           </template>
         </app-form-group>
@@ -51,7 +53,6 @@
 </template>
 
 <script>
-import {required, minLength, maxLength, minValue, maxValue, email, numeric, url} from 'vuelidate/lib/validators';
 import AppContainer from "../../../../components/layout/Container/AppContainer";
 import AppFormGroup from "../../../../components/ui/Form/AppFormGroup";
 import AppInput from "../../../../components/ui/Form/AppInput";
@@ -60,35 +61,31 @@ import AppBtn from "../../../../components/ui/Buttons/AppBtn";
 import BreadcrumbsList from "../../../../components/ui/Breadcrumbs/BreadcrumbsList";
 import BreadcrumbsItem from "../../../../components/ui/Breadcrumbs/BreadcrumbsItem";
 import AppFormGroupError from "../../../../components/ui/Form/AppFormGroupError";
+import {required, minLength, maxLength, minValue, maxValue, email, numeric, url} from 'vuelidate/lib/validators';
 import {mapGetters} from "vuex";
 
 export default {
   name: "CardsCreate",
-  async fetch({ store, params }) {
-    await store.dispatch('cards/providers/fetchItem', params.id)
+  async fetch({store, params}) {
+    await store.dispatch('phones/apps/fetchItem', params.id)
   },
   data() {
     return {
       form: {
-        title: '',
+        phone: '',
       },
       errors: {
-        title: [],
+        phone: [],
       }
     }
   },
+  mounted() {
+    this.form.phone = this.item.number
+  },
   validations: {
     form: {
-      title: {required, minLength: minLength(1), maxLength: maxLength(255)},
+      phone: {required, numeric, minValue: minValue(70000000000), maxValue: maxValue(79999999999)},
     }
-  },
-  mounted() {
-    this.form.title = this.item.title
-  },
-  computed: {
-    ...mapGetters({
-      item: 'cards/providers/item'
-    })
   },
   methods: {
     async submit() {
@@ -99,21 +96,25 @@ export default {
       }
 
       let formData = new URLSearchParams()
-      formData.append('title', this.form.title)
+      formData.append('number', this.form.phone)
 
-      await this.$axios.$put(`/api/admin/providers/${this.$route.params.id}`, formData, {
+      await this.$axios.$put(`/api/admin/apps/${this.$route.params.id}`, formData, {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
         .then(r => {
-          this.$router.push(`/cards/providers/${r.data.id}`)
+          this.$router.push(`/phones/apps/${r.data.id}`)
         })
         .catch(e => {
-          console.log(e)
           if (e.response.status === 422) {
             this.errors = Object.assign({}, this.errors, e.response.data.errors)
           }
         })
     }
+  },
+  computed: {
+    ...mapGetters({
+      item: 'phones/apps/item'
+    })
   },
   components: {
     AppFormGroupError,
