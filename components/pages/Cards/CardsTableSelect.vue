@@ -28,6 +28,11 @@ export default {
     options: { type: Array, required: true },
     firstValue: { type: Number, default: 0}
   },
+  watch: {
+    firstValue: function (value) {
+      this.value = value
+    }
+  },
   components: {AppSelect}
 }
 </script>

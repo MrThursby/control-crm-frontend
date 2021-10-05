@@ -107,8 +107,8 @@
             <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
           </app-table-cell>
           <app-table-cell nowrap>+{{ item.phone }}</app-table-cell>
-          <app-table-cell>{{ item.fio }}</app-table-cell>
-          <app-table-cell>{{ item.codeword }}</app-table-cell>
+          <app-table-cell nowrap>{{ item.fio }}</app-table-cell>
+          <app-table-cell nowrap>{{ item.codeword }}</app-table-cell>
           <app-table-cell nowrap>{{ item.link_photo }}</app-table-cell>
           <app-table-cell nowrap>{{ item.comment }}</app-table-cell>
           <app-table-cell nowrap>
