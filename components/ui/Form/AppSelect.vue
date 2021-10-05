@@ -18,6 +18,7 @@
         class="font-semibold"
         style="min-width: 8rem;"
         :class="{'uppercase': uppercase}"
+        :style="{color: status_colors[options[value].color || 'default']}"
       >{{ options[value].title || '' }}</span>
       <span
         class="transform transition duration-200"
@@ -37,6 +38,7 @@
       <div
         class="pl-4 pr-10 h-12 flex items-center cursor-pointer"
         :class="{'uppercase': uppercase}"
+        :style="{color: status_colors[options[index].color || 'default']}"
         v-for="(option, index) of options"
         @click="() => selectItem(index)"
         :key="index"
@@ -46,6 +48,8 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   name: "AppSelect",
   data: () => ({
@@ -57,6 +61,11 @@ export default {
       this.$emit('input', index)
       this.$refs.select.blur()
     }
+  },
+  computed: {
+    ...mapGetters({
+      status_colors: 'app/status_colors'
+    })
   },
   props: {
     options: null,

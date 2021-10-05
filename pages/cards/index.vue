@@ -60,27 +60,67 @@
       <app-t-head>
         <app-table-h-row>
           <app-table-h-cell center>#</app-table-h-cell>
-          <app-table-h-cell>Номер карты</app-table-h-cell>
+          <app-table-h-cell>Проект</app-table-h-cell>
           <app-table-h-cell>Банк</app-table-h-cell>
-          <app-table-h-cell>Поставщик</app-table-h-cell>
-          <app-table-h-cell>Проекты</app-table-h-cell>
-          <app-table-h-cell>ФИО</app-table-h-cell>
-          <app-table-h-cell>Добавлено</app-table-h-cell>
           <app-table-h-cell>Статус</app-table-h-cell>
+          <app-table-h-cell>Номер карты</app-table-h-cell>
+          <app-table-h-cell>Номер телефона</app-table-h-cell>
+          <app-table-h-cell>ФИО</app-table-h-cell>
+          <app-table-h-cell>Кодовое слово</app-table-h-cell>
+          <app-table-h-cell>Ссылка на фото</app-table-h-cell>
+          <app-table-h-cell>Комментарий</app-table-h-cell>
+          <app-table-h-cell>Поставщик</app-table-h-cell>
+          <app-table-h-cell>Добавлено</app-table-h-cell>
         </app-table-h-row>
       </app-t-head>
       <app-t-body>
         <app-table-row v-for="(item, index) of cards.data" :key="index">
-          <app-table-cell center>{{ item.id }}</app-table-cell>
+          <app-table-cell class="pl-4" center>{{ item.id }}</app-table-cell>
+          <app-table-cell nowrap>
+            <cards-table-select
+              @input="value => patchCard(item.id, {
+                project_id: projects.data[value].id
+              })"
+              :first-value="projects.data.findIndex(project => project.id === item.project.id)"
+              :options="projects.data"
+            />
+          </app-table-cell>
+          <app-table-cell nowrap>
+            <cards-table-select
+              @input="value => patchCard(item.id, {
+                bank_id: banks.data[value].id
+              })"
+              :first-value="banks.data.findIndex(bank => bank.id === item.bank.id)"
+              :options="banks.data"
+            />
+          </app-table-cell>
+          <app-table-cell nowrap>
+            <cards-table-select
+              @input="value => patchCard(item.id, {
+                status_id: statuses.data[value].id
+              })"
+              :first-value="statuses.data.findIndex(status => status.id === item.status.id)"
+              :options="statuses.data"
+            />
+          </app-table-cell>
           <app-table-cell nowrap>
             <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
           </app-table-cell>
-          <app-table-cell>{{ item.bank.title }}</app-table-cell>
-          <app-table-cell>{{ item.provider.title }}</app-table-cell>
-          <app-table-cell>{{ item.project.title }}</app-table-cell>
+          <app-table-cell nowrap>+{{ item.phone }}</app-table-cell>
           <app-table-cell>{{ item.fio }}</app-table-cell>
-          <app-table-cell>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
-          <app-table-cell center nowrap :style="{ color: statusColors[item.status.color] }">{{ item.status.title }}</app-table-cell>
+          <app-table-cell>{{ item.codeword }}</app-table-cell>
+          <app-table-cell nowrap>{{ item.link_photo }}</app-table-cell>
+          <app-table-cell nowrap>{{ item.comment }}</app-table-cell>
+          <app-table-cell nowrap>
+            <cards-table-select
+              @input="value => patchCard(item.id, {
+                provider_id: providers.data[value].id
+              })"
+              :first-value="providers.data.findIndex(provider => provider.id === item.provider.id)"
+              :options="providers.data"
+            />
+          </app-table-cell>
+          <app-table-cell nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
       </app-t-body>
     </app-table>
@@ -114,6 +154,7 @@ import AppDatepicker from "../../components/ui/Form/AppDatepicker";
 import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
 import AppPaginator from "../../components/Table/AppPaginator";
 import AppLink from "../../components/ui/Links/AppLink";
+import CardsTableSelect from "../../components/pages/Cards/CardsTableSelect";
 
 export default {
   name: "CardIndex",
@@ -138,19 +179,12 @@ export default {
       provider: 0,
       search: '',
     },
-    statusColors: {
-      green: '#10b981',
-      orange: '#ff6a00',
-      blue: '#2196f3',
-      red: '#ff3a3a',
-      yellow: '#ffeb3b',
-      purple: '#6556ff',
-      black: '#777f9e',
-      brown: '#bf775c',
-    },
     page: 1,
   }),
   methods: {
+    async patchCard(card_id, data) {
+      await this.$axios.$patch(`/api/admin/cards/${card_id}`, data)
+    },
     async reFetch(page) {
       this.page = page || this.page
 
@@ -195,6 +229,7 @@ export default {
     })
   },
   components: {
+    CardsTableSelect,
     AppLink,
     AppPaginator,
     PageFiltersItem,

@@ -11,7 +11,18 @@ export const state = () => ({
     { id: 25, title: '25 записей' },
     { id: 75, title: '75 записей' },
     { id: 100, title: '100 записей' },
-  ]
+  ],
+  status_colors: {
+    default: '#ffffff',
+    green: '#10b981',
+    orange: '#ff6a00',
+    blue: '#2196f3',
+    red: '#ff3a3a',
+    yellow: '#ffeb3b',
+    purple: '#6556ff',
+    black: '#777f9e',
+    brown: '#bf775c',
+  },
 })
 
 export const mutations = {
@@ -30,4 +41,5 @@ export const getters = {
   menu: state => state.menu,
   per_page_options: state => state.per_page_options,
   per_page: state => state.per_page,
+  status_colors: state => state.status_colors
 }

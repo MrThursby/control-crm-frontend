@@ -73,7 +73,7 @@
           :errors="errors.provider_id"
         >
           <app-select
-            v-model="form.provider_id"
+            v-model="form.provider"
             :options="providers.data"
             :invalid="errors.provider_id.length !== 0"
           />
@@ -86,7 +86,7 @@
           :errors="errors.project_id"
         >
           <app-select
-            v-model="form.project_id"
+            v-model="form.project"
             :options="projects.data"
             :invalid="errors.project_id.length !== 0"
           />
@@ -319,7 +319,7 @@ export default {
     this.form.project = project
 
     let status = this.statuses.data.findIndex(status => status.id === this.item.status.id)
-    status = status === -1 ? 0 : project
+    status = status === -1 ? 0 : status
     this.form.status = status
 
     this.form.fio = this.item.fio
@@ -352,21 +352,6 @@ export default {
       formData.append('bank_id', this.banks.data[this.form.bank].id)
       formData.append('provider_id', this.providers.data[this.form.provider].id)
       formData.append('project_id', this.projects.data[this.form.project].id)
-      /*let formData = {
-        card: this.form.card,
-        fio: this.form.fio,
-        phone: this.form.phone,
-        login: this.form.login,
-        password_ib: this.form.password_ib,
-        codeword: this.form.codeword,
-        link_photo: this.form.link_photo,
-        comment: this.form.comment,
-
-        status_id: this.statuses.data[this.form.status].id,
-        bank_id: this.banks.data[this.form.bank].id,
-        provider_id: this.providers.data[this.form.provider].id,
-        project_id: this.projects.data[this.form.project].id,
-      }*/
 
       await this.$axios.$put(`/api/admin/cards/${this.$route.params.id}`, formData, {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}

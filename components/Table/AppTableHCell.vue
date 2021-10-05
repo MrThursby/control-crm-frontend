@@ -1,5 +1,5 @@
 <template>
-  <th class="py-3 px-2 sticky top-0" :class="center ? 'text-center' : 'text-left'">
+  <th class="whitespace-nowrap py-3 px-2 sticky top-0" :class="center ? 'text-center' : 'text-left'">
     <slot />
   </th>
 </template>
