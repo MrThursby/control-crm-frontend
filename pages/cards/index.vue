@@ -3,6 +3,10 @@
     <cards-nav class="mb-8"/>
 
     <page-filters class="flex flex-wrap">
+      <page-filters-item>
+        <app-btn @click="show_settings = true"><fa-icon icon="cog" /></app-btn>
+      </page-filters-item>
+
       <page-filters-item class="mr-auto">
         <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.search" />
       </page-filters-item>
@@ -59,24 +63,19 @@
     <app-table class="mb-4">
       <app-t-head>
         <app-table-h-row>
-          <app-table-h-cell center>#</app-table-h-cell>
-          <app-table-h-cell>Проект</app-table-h-cell>
-          <app-table-h-cell>Банк</app-table-h-cell>
-          <app-table-h-cell>Статус</app-table-h-cell>
-          <app-table-h-cell>Номер карты</app-table-h-cell>
-          <app-table-h-cell>Номер телефона</app-table-h-cell>
-          <app-table-h-cell>ФИО</app-table-h-cell>
-          <app-table-h-cell>Кодовое слово</app-table-h-cell>
-          <app-table-h-cell>Ссылка на фото</app-table-h-cell>
-          <app-table-h-cell>Комментарий</app-table-h-cell>
-          <app-table-h-cell>Поставщик</app-table-h-cell>
-          <app-table-h-cell>Добавлено</app-table-h-cell>
+          <app-table-h-cell
+            v-for="(field, i) of table_fields.cards"
+            v-show="field.show"
+            :key="i"
+            :center="i === 'id'">
+            {{ field.title }}
+          </app-table-h-cell>
         </app-table-h-row>
       </app-t-head>
       <app-t-body>
         <app-table-row v-for="(item, index) of cards.data" :key="index">
-          <app-table-cell class="pl-4" center>{{ item.id }}</app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.id.show"  class="pl-4" center>{{ item.id }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.project.show"  nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 project_id: projects.data[value].id
@@ -85,7 +84,7 @@
               :options="projects.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.bank.show"  nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 bank_id: banks.data[value].id
@@ -94,7 +93,7 @@
               :options="banks.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.status.show"  nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 status_id: statuses.data[value].id
@@ -103,15 +102,15 @@
               :options="statuses.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.card.show"  nowrap>
             <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
           </app-table-cell>
-          <app-table-cell nowrap>+{{ item.phone }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.fio }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.codeword }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.link_photo }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.comment }}</app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.phone.show"  nowrap>+{{ item.phone }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.fio.show"  nowrap>{{ item.fio }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.codeword.show"  nowrap>{{ item.codeword }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.link_photo.show"  nowrap>{{ item.link_photo }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.comment.show"  nowrap>{{ item.comment }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.provider.show" nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 provider_id: providers.data[value].id
@@ -120,10 +119,12 @@
               :options="providers.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.created_at.show" nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
       </app-t-body>
     </app-table>
+
+    <app-table-settings table="cards" @close="show_settings = false" v-show="show_settings" />
 
     <app-paginator
       class="mb-4"
@@ -155,6 +156,7 @@ import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
 import AppPaginator from "../../components/Table/AppPaginator";
 import AppLink from "../../components/ui/Links/AppLink";
 import CardsTableSelect from "../../components/pages/Cards/CardsTableSelect";
+import AppTableSettings from "../../components/Table/AppTableSettings";
 
 export default {
   name: "CardIndex",
@@ -179,6 +181,7 @@ export default {
       provider: 0,
       search: '',
     },
+    show_settings: false,
     page: 1,
   }),
   methods: {
@@ -224,11 +227,14 @@ export default {
       projects: 'cards/projects/paginator',
       statuses: 'cards/statuses/paginator',
 
+      table_fields: 'app/tables',
+
       per_page: 'app/per_page',
       per_page_options: 'app/per_page_options',
     })
   },
   components: {
+    AppTableSettings,
     CardsTableSelect,
     AppLink,
     AppPaginator,

@@ -23,12 +23,31 @@ export const state = () => ({
     black: '#777f9e',
     brown: '#bf775c',
   },
+  tables: {
+    cards: {
+      id: { title: '#', show: true },
+      project: { title: 'Проект', show: true },
+      bank: { title: 'Банк', show: true },
+      status: { title: 'Статус', show: true },
+      card: { title: 'Номер карты', show: true },
+      phone: { title: 'Номер телефона', show: true },
+      fio: { title: 'ФИО', show: true },
+      codeword: { title: 'Кодовое слово', show: true },
+      link_photo: { title: 'Ссылка на фото', show: true },
+      comment: { title: 'Комментарий', show: true },
+      provider: { title: 'Поставщик', show: true },
+      created_at: { title: 'Добавлено', show: true },
+    },
+  }
 })
 
 export const mutations = {
   setPerPage(state, per_page) {
     state.per_page = per_page
   },
+  setTableFieldShow(state, {show, table, field}) {
+    state.tables[table][field].show = show
+  }
 }
 
 export const actions = {
@@ -41,5 +60,6 @@ export const getters = {
   menu: state => state.menu,
   per_page_options: state => state.per_page_options,
   per_page: state => state.per_page,
-  status_colors: state => state.status_colors
+  status_colors: state => state.status_colors,
+  tables: state => state.tables
 }
