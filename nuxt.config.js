@@ -90,6 +90,7 @@ export default {
       local: {
         url: process.env.API_URL,
         endpoints: {
+          csrf: { url: '/sanctum/csrf-cookie' },
           login: { url: '/auth/login', method: 'post' },
           user: { url: '/api/user', method: 'get' },
           logout: false

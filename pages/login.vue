@@ -46,22 +46,21 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$axios.$get(`/sanctum/csrf-cookie`);
-  },
   methods: {
     async submit() {
-      await this.$auth.loginWith('local', {
-        data: {
-          ...this.form,
-          device_name: navigator.userAgent
-        }
-      }).then(() => {
-        this.$router.push('/')
-      }).catch(e => {
-        if (e.code === 422) {
-          this.error = 'Неверный логин или пароль'
-        }
+      await this.$axios.$get('/sanctum/csrf-cookie').then(() => {
+        this.$auth.loginWith('local', {
+          data: {
+            ...this.form,
+            device_name: navigator.userAgent
+          }
+        }).then(() => {
+          this.$router.push('/')
+        }).catch(e => {
+          if (e.code === 422) {
+            this.error = 'Неверный логин или пароль'
+          }
+        })
       })
     }
   },
