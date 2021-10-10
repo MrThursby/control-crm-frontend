@@ -1,31 +1,26 @@
 <template>
-  <div
-    class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center"
+  <app-modal
+    modal-class="w-1/3"
+    title="Настройка таблицы"
+    close="Закрыть"
+    @close="$emit('close')"
   >
-    <div @click="$emit('close')"
-         class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50"></div>
-
-    <div class="bg-dark rounded-md z-30">
-      <div class="border-b p-4 border-black border-opacity-20">
-        Настройка таблицы
-      </div>
-      <div class="p-4">
-        <label class="block p-2" v-for="(field, i) of fields[table]" :key="i">
-          <input :checked="field.show"
-                 @change="setFieldShow({show: !field.show, table: table, field: i})"
-                 type="checkbox">
-          <span>{{ field.title }}</span>
-        </label>
-      </div>
-    </div>
-  </div>
+    <label class="block p-2" v-for="(field, i) of fields[table]" :key="i">
+      <input :checked="field.show"
+             @change="setFieldShow({show: !field.show, table: table, field: i})"
+             type="checkbox">
+      <span>{{ field.title }}</span>
+    </label>
+  </app-modal>
 </template>
 
 <script>
 import {mapGetters, mapMutations} from "vuex";
+import AppModal from "../ui/Modal/AppModal";
 
 export default {
   name: "AppTableSettings",
+  components: {AppModal},
   computed: {
     ...mapGetters({
       fields: 'app/tables'

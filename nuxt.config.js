@@ -104,7 +104,7 @@ export default {
     suffix: true,
     icons: {
       solid: [
-        'faCog', 'faHome', 'faSearch', 'faSimCard', 'faCreditCard', 'faExchangeAlt', 'faBars', 'faTimes'
+        'faCog', 'faHome', 'faSearch', 'faSimCard', 'faCreditCard', 'faExchangeAlt', 'faBars', 'faTimes', 'faChevronDown'
       ]
     }
   },

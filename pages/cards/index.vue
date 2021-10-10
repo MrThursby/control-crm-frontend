@@ -62,19 +62,38 @@
 
     <app-table class="mb-4">
       <app-t-head>
-        <app-table-h-row>
+        <app-table-h-row class="row">
           <app-table-h-cell
             v-for="(field, i) of table_fields.cards"
             v-show="field.show"
             :key="i"
             :center="i === 'id'">
-            {{ field.title }}
+            <template v-if="i === 'id'">
+              <input
+                @change="selectAll"
+                class="hidden checkbox"
+                v-model="all_checked"
+                name="select-all-items"
+                type="checkbox"
+              />
+              <span class="span-id">{{ field.title }}</span>
+            </template>
+            <template v-else>
+              {{ field.title }}
+            </template>
           </app-table-h-cell>
         </app-table-h-row>
       </app-t-head>
       <app-t-body>
-        <app-table-row v-for="(item, index) of cards.data" :key="index">
-          <app-table-cell v-show="table_fields.cards.id.show"  class="pl-4" center>{{ item.id }}</app-table-cell>
+        <app-table-row class="row" v-for="(item, index) of cards.data" :key="index">
+          <app-table-cell v-show="table_fields.cards.id.show" class="pl-4" center>
+            <input v-model="selected_rows"
+                   :value="item.id"
+                   :name="`item-${index}`"
+                   class="hidden checkbox" type="checkbox"
+            />
+            <span class="span-id">{{ item.id }}</span>
+          </app-table-cell>
           <app-table-cell v-show="table_fields.cards.project.show"  nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
@@ -124,7 +143,80 @@
       </app-t-body>
     </app-table>
 
-    <app-table-settings table="cards" @close="show_settings = false" v-show="show_settings" />
+    <div class="bg-black bg-opacity-20 p-4 rounded-md mb-4">
+      <div class="flex justify-between items-center">
+        <span class="text-xl font-bold">Изменить выбранные</span>
+        <app-btn px="4" py="2" @click="show_mass_patch = !show_mass_patch">
+          <fa-icon :class="{'transform rotate-180': show_mass_patch}"
+                   :icon="['fa', 'chevron-down']"
+                   class="text-xs transition duration-150"/>
+        </app-btn>
+      </div>
+      <div v-show="show_mass_patch" class="mt-4 flex flex-col lg:flex-row gap-6">
+        <div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Проект</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...projects.data]"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Банк</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...banks.data]"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Статус</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...statuses.data]"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Поставщик</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...providers.data]"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <app-btn :disabled="selected_rows.length < 1" @click="show_warning = true">Изменить</app-btn>
+
+          <app-modal
+            modal-class="w-1/3"
+            title="Внимание"
+            ok="Да"
+            v-show="show_warning"
+            @close="show_warning = false"
+            @ok="show_warning = false"
+          >
+            Внимание, вы изменяете сразу {{ selected_rows.length }} записей.
+            Действие нельзя будет отменить.
+            Хотите продолжить?
+          </app-modal>
+        </div>
+      </div>
+    </div>
+
+    <app-table-settings
+      table="cards"
+      @close="show_settings = false"
+      v-show="show_settings"
+    />
 
     <app-paginator
       class="mb-4"
@@ -157,6 +249,7 @@ import AppPaginator from "../../components/Table/AppPaginator";
 import AppLink from "../../components/ui/Links/AppLink";
 import CardsTableSelect from "../../components/pages/Cards/CardsTableSelect";
 import AppTableSettings from "../../components/Table/AppTableSettings";
+import AppModal from "../../components/ui/Modal/AppModal";
 
 export default {
   name: "CardIndex",
@@ -181,7 +274,11 @@ export default {
       provider: 0,
       search: '',
     },
+    selected_rows: [],
     show_settings: false,
+    show_warning: false,
+    all_checked: false,
+    show_mass_patch: false,
     page: 1,
   }),
   methods: {
@@ -218,6 +315,16 @@ export default {
         ...filters
       })
     },
+    selectAll() {
+      if(this.all_checked) {
+        this.selected_rows = this.cards.data.map(i => {
+          return i.id
+        })
+      }
+      if(!this.all_checked) {
+        this.selected_rows = []
+      }
+    }
   },
   computed: {
     ...mapGetters({
@@ -233,7 +340,13 @@ export default {
       per_page_options: 'app/per_page_options',
     })
   },
+  watch: {
+    selected_rows: function (v) {
+      this.all_checked = v.length === this.cards.data.length
+    }
+  },
   components: {
+    AppModal,
     AppTableSettings,
     CardsTableSelect,
     AppLink,
@@ -251,5 +364,17 @@ export default {
 </script>
 
 <style scoped>
+.row:hover .span-id {
+  display: none;
+}
+.row:hover .checkbox {
+  display: inline;
+}
 
+.checkbox:checked {
+  display: inline;
+}
+.checkbox:checked ~ .span-id {
+  display: none;
+}
 </style>
