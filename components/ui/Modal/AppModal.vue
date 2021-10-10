@@ -1,11 +1,11 @@
 <template>
   <div
-    class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center"
+    class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-30"
   >
     <div @click="$emit('close')"
          class="fixed top-0 right-0 left-0 bottom-0 bg-black bg-opacity-50"></div>
 
-    <div :class="modalClass" class="bg-dark rounded-md z-30">
+    <div :class="modalClass" class="mx-4 bg-dark rounded-md z-40">
       <div class="p-4 border-b border-black border-opacity-20 flex justify-between">
         <span>{{ title }}</span>
         <span class="cursor-pointer" @click="$emit('close')">

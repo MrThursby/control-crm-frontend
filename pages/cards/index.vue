@@ -197,7 +197,7 @@
           <app-btn :disabled="selected_rows.length < 1" @click="show_warning = true">Изменить</app-btn>
 
           <app-modal
-            modal-class="w-1/3"
+            modal-class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
             title="Внимание"
             ok="Да"
             v-show="show_warning"
@@ -287,6 +287,7 @@ export default {
     },
     async reFetch(page) {
       this.page = page || this.page
+      this.all_checked = false
 
       let filters = {}
 

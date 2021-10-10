@@ -1,6 +1,6 @@
 <template>
   <app-modal
-    modal-class="w-1/3"
+    modal-class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
     title="Настройка таблицы"
     close="Закрыть"
     @close="$emit('close')"
