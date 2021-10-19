@@ -1,6 +1,7 @@
 <template>
   <component
     class="underline"
+    @click="$emit('click', $event)"
     :is="tag"
     :to="to"
     :href="to"

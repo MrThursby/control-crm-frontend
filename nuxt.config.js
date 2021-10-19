@@ -56,12 +56,19 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/fontawesome',
     '@nuxtjs/dotenv',
+    '@nuxtjs/recaptcha',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
     credentials: true,
+  },
+
+  recaptcha: {
+    siteKey: process.env.RECAPTCHA_SITE_KEY,
+    version: '3.0',
+    theme: 'dark'
   },
 
   proxy: {
