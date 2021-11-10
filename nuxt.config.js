@@ -29,6 +29,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/persistedstate',
     '~plugins/datepicker.js',
     '~plugins/vuelidate.js'
   ],
@@ -55,12 +56,19 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/fontawesome',
     '@nuxtjs/dotenv',
+    '@nuxtjs/recaptcha',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
     credentials: true,
+  },
+
+  recaptcha: {
+    siteKey: process.env.RECAPTCHA_SITE_KEY,
+    version: '3.0',
+    theme: 'dark'
   },
 
   proxy: {
@@ -89,6 +97,7 @@ export default {
       local: {
         url: process.env.API_URL,
         endpoints: {
+          csrf: { url: '/sanctum/csrf-cookie' },
           login: { url: '/auth/login', method: 'post' },
           user: { url: '/api/user', method: 'get' },
           logout: false
@@ -102,7 +111,7 @@ export default {
     suffix: true,
     icons: {
       solid: [
-        'faCog', 'faHome', 'faSearch', 'faSimCard', 'faCreditCard', 'faExchangeAlt', 'faBars', 'faTimes'
+        'faCog', 'faHome', 'faSearch', 'faSimCard', 'faCreditCard', 'faExchangeAlt', 'faBars', 'faTimes', 'faChevronDown'
       ]
     }
   },

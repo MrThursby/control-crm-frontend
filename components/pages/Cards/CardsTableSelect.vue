@@ -1,13 +1,15 @@
 <template>
   <app-select
-    @input="onInput"
-    :value="value"
-    :options="options"
+      :up="up"
+      @input="onInput"
+      :value="value"
+      :options="options"
   />
 </template>
 
 <script>
 import AppSelect from "../../ui/Form/AppSelect";
+
 export default {
   name: "CardsTableSelect",
   data() {
@@ -19,14 +21,15 @@ export default {
     this.value = this.firstValue
   },
   methods: {
-    onInput(e){
+    onInput(e) {
       this.value = e
       this.$emit('input', e)
     }
   },
   props: {
-    options: { type: Array, required: true },
-    firstValue: { type: Number, default: 0}
+    options: {type: Array, required: true},
+    firstValue: {type: Number, default: 0},
+    up: {type: Boolean, default: false}
   },
   watch: {
     firstValue: function (value) {

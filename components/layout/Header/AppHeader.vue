@@ -45,9 +45,9 @@
           :to="item.to"
         >{{ item.title }}</nuxt-link>
         <hr class="border-black border-opacity-20 -mx-4 mb-2">
-        <button
+        <app-btn
           class="text-danger flex items-center px-4 -mx-4 h-10 mb-2 focus:bg-black focus:bg-opacity-10"
-          @click="handleLogout">Выйти</button>
+          @click="handleLogout">Выйти</app-btn>
       </div>
     </div>
   </header>
@@ -59,6 +59,7 @@ import AppInput from "../../ui/Form/AppInput";
 import AppLink from "../../ui/Links/AppLink";
 import focus from 'vue-focus'
 import SearchForm from "../../ui/Form/SearchForm";
+import AppBtn from "../../ui/Buttons/AppBtn";
 export default {
   name: "AppHeader",
   data() { return {
@@ -70,8 +71,8 @@ export default {
     submitSearchForm() {
       this.mobileSearchOpened = false
     },
-    handleLogout() {
-      this.$auth.logout()
+    async handleLogout() {
+      await this.$auth.logout()
     },
   },
   computed: {
@@ -80,7 +81,7 @@ export default {
     },
   },
   directives: {focus},
-  components: {SearchForm, AppLink, AppInput, AppContainer}
+  components: {AppBtn, SearchForm, AppLink, AppInput, AppContainer}
 }
 </script>
 

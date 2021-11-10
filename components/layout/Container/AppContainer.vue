@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container px-4 mx-auto"
+    class="px-4 w-full mx-auto mx-auto"
   >
     <slot />
   </div>

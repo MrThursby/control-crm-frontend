@@ -21,6 +21,9 @@
           placeholder="Пароль"
         />
       </app-form-group>
+      <app-form-group class="mb-4 flex justify-center">
+        <recaptcha data-theme="dark" />
+      </app-form-group>
       <app-form-group class="sm:text-center">
         <app-btn>Войти</app-btn>
       </app-form-group>
@@ -46,22 +49,25 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$axios.$get(`/sanctum/csrf-cookie`);
-  },
   methods: {
     async submit() {
-      await this.$auth.loginWith('local', {
-        data: {
-          ...this.form,
-          device_name: navigator.userAgent
-        }
-      }).then(() => {
-        this.$router.push('/')
-      }).catch(e => {
-        if (e.code === 422) {
-          this.error = 'Неверный логин или пароль'
-        }
+      await this.$axios.$get('/sanctum/csrf-cookie').then(() => {
+        this.$recaptcha.getResponse().then(token => {
+          this.$auth.loginWith('local', {
+            data: {
+              ...this.form,
+              device_name: navigator.userAgent,
+              'g-recaptcha-response': token
+            }
+          }).then(() => {
+            this.$router.push('/')
+            this.$recaptcha.reset()
+          }).catch(e => {
+            if (e.code === 422) {
+              this.error = 'Неверный логин или пароль'
+            }
+          })
+        })
       })
     }
   },

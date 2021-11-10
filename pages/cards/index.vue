@@ -3,6 +3,10 @@
     <cards-nav class="mb-8"/>
 
     <page-filters class="flex flex-wrap">
+      <page-filters-item>
+        <app-btn @click="show_settings = true"><fa-icon icon="cog" /></app-btn>
+      </page-filters-item>
+
       <page-filters-item class="mr-auto">
         <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.search" />
       </page-filters-item>
@@ -58,25 +62,39 @@
 
     <app-table class="mb-4">
       <app-t-head>
-        <app-table-h-row>
-          <app-table-h-cell center>#</app-table-h-cell>
-          <app-table-h-cell>Проект</app-table-h-cell>
-          <app-table-h-cell>Банк</app-table-h-cell>
-          <app-table-h-cell>Статус</app-table-h-cell>
-          <app-table-h-cell>Номер карты</app-table-h-cell>
-          <app-table-h-cell>Номер телефона</app-table-h-cell>
-          <app-table-h-cell>ФИО</app-table-h-cell>
-          <app-table-h-cell>Кодовое слово</app-table-h-cell>
-          <app-table-h-cell>Ссылка на фото</app-table-h-cell>
-          <app-table-h-cell>Комментарий</app-table-h-cell>
-          <app-table-h-cell>Поставщик</app-table-h-cell>
-          <app-table-h-cell>Добавлено</app-table-h-cell>
+        <app-table-h-row class="row">
+          <app-table-h-cell
+            v-for="(field, i) of table_fields.cards"
+            v-show="field.show"
+            :key="i"
+            :center="i === 'id'">
+            <template v-if="i === 'id'">
+              <input
+                @change="selectAll"
+                class="hidden checkbox"
+                v-model="all_checked"
+                name="select-all-items"
+                type="checkbox"
+              />
+              <span class="span-id">{{ field.title }}</span>
+            </template>
+            <template v-else>
+              {{ field.title }}
+            </template>
+          </app-table-h-cell>
         </app-table-h-row>
       </app-t-head>
       <app-t-body>
-        <app-table-row v-for="(item, index) of cards.data" :key="index">
-          <app-table-cell class="pl-4" center>{{ item.id }}</app-table-cell>
-          <app-table-cell nowrap>
+        <app-table-row class="row" v-for="(item, index) of cards.data" :key="index">
+          <app-table-cell v-show="table_fields.cards.id.show" class="pl-4" center>
+            <input v-model="selected_rows"
+                   :value="item.id"
+                   :name="`item-${index}`"
+                   class="hidden checkbox" type="checkbox"
+            />
+            <span class="span-id">{{ item.id }}</span>
+          </app-table-cell>
+          <app-table-cell v-show="table_fields.cards.project.show"  nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 project_id: projects.data[value].id
@@ -85,7 +103,7 @@
               :options="projects.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.bank.show"  nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 bank_id: banks.data[value].id
@@ -94,7 +112,7 @@
               :options="banks.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.status.show"  nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 status_id: statuses.data[value].id
@@ -103,15 +121,15 @@
               :options="statuses.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.card.show"  nowrap>
             <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
           </app-table-cell>
-          <app-table-cell nowrap>+{{ item.phone }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.fio }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.codeword }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.link_photo }}</app-table-cell>
-          <app-table-cell nowrap>{{ item.comment }}</app-table-cell>
-          <app-table-cell nowrap>
+          <app-table-cell v-show="table_fields.cards.phone.show"  nowrap>+{{ item.phone }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.fio.show"  nowrap>{{ item.fio }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.codeword.show"  nowrap>{{ item.codeword }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.link_photo.show"  nowrap>{{ item.link_photo }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.comment.show"  nowrap>{{ item.comment }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.provider.show" nowrap>
             <cards-table-select
               @input="value => patchCard(item.id, {
                 provider_id: providers.data[value].id
@@ -120,10 +138,85 @@
               :options="providers.data"
             />
           </app-table-cell>
-          <app-table-cell nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.created_at.show" nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
       </app-t-body>
     </app-table>
+
+    <div class="bg-black bg-opacity-20 p-4 rounded-md mb-4">
+      <div class="flex justify-between items-center">
+        <span class="text-xl font-bold">Изменить выбранные</span>
+        <app-btn px="4" py="2" @click="show_mass_patch = !show_mass_patch">
+          <fa-icon :class="{'transform rotate-180': show_mass_patch}"
+                   :icon="['fa', 'chevron-down']"
+                   class="text-xs transition duration-150"/>
+        </app-btn>
+      </div>
+      <div v-show="show_mass_patch" class="mt-4 flex flex-col lg:flex-row gap-6">
+        <div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Проект</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...projects.data]"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Банк</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...banks.data]"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Статус</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...statuses.data]"
+              />
+            </div>
+          </div>
+          <div class="flex items-center gap-4 mb-2">
+            <div class="w-24">Поставщик</div>
+            <div>
+              <cards-table-select
+                :first-value="0" up
+                :options="[{title: 'Не изменять'}, ...providers.data]"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <app-btn :disabled="selected_rows.length < 1" @click="show_warning = true">Изменить</app-btn>
+
+          <app-modal
+            modal-class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+            title="Внимание"
+            ok="Да"
+            v-show="show_warning"
+            @close="show_warning = false"
+            @ok="show_warning = false"
+          >
+            Внимание, вы изменяете сразу {{ selected_rows.length }} записей.
+            Действие нельзя будет отменить.
+            Хотите продолжить?
+          </app-modal>
+        </div>
+      </div>
+    </div>
+
+    <app-table-settings
+      table="cards"
+      @close="show_settings = false"
+      v-show="show_settings"
+    />
 
     <app-paginator
       class="mb-4"
@@ -155,6 +248,8 @@ import PageFiltersItem from "../../components/ui/PageFilters/PageFiltersItem";
 import AppPaginator from "../../components/Table/AppPaginator";
 import AppLink from "../../components/ui/Links/AppLink";
 import CardsTableSelect from "../../components/pages/Cards/CardsTableSelect";
+import AppTableSettings from "../../components/Table/AppTableSettings";
+import AppModal from "../../components/ui/Modal/AppModal";
 
 export default {
   name: "CardIndex",
@@ -179,6 +274,11 @@ export default {
       provider: 0,
       search: '',
     },
+    selected_rows: [],
+    show_settings: false,
+    show_warning: false,
+    all_checked: false,
+    show_mass_patch: false,
     page: 1,
   }),
   methods: {
@@ -187,6 +287,7 @@ export default {
     },
     async reFetch(page) {
       this.page = page || this.page
+      this.all_checked = false
 
       let filters = {}
 
@@ -215,6 +316,16 @@ export default {
         ...filters
       })
     },
+    selectAll() {
+      if(this.all_checked) {
+        this.selected_rows = this.cards.data.map(i => {
+          return i.id
+        })
+      }
+      if(!this.all_checked) {
+        this.selected_rows = []
+      }
+    }
   },
   computed: {
     ...mapGetters({
@@ -224,11 +335,20 @@ export default {
       projects: 'cards/projects/paginator',
       statuses: 'cards/statuses/paginator',
 
+      table_fields: 'app/tables',
+
       per_page: 'app/per_page',
       per_page_options: 'app/per_page_options',
     })
   },
+  watch: {
+    selected_rows: function (v) {
+      this.all_checked = v.length === this.cards.data.length
+    }
+  },
   components: {
+    AppModal,
+    AppTableSettings,
     CardsTableSelect,
     AppLink,
     AppPaginator,
@@ -245,5 +365,17 @@ export default {
 </script>
 
 <style scoped>
+.row:hover .span-id {
+  display: none;
+}
+.row:hover .checkbox {
+  display: inline;
+}
 
+.checkbox:checked {
+  display: inline;
+}
+.checkbox:checked ~ .span-id {
+  display: none;
+}
 </style>
