@@ -8,7 +8,9 @@
 export default {
   name: "AppTableHCell",
   props: {
-    center: { type: Boolean, default: false }
+    center: { type: Boolean, default: false },
+    group: { type: String },
+    name: { type: String }
   }
 }
 </script>
