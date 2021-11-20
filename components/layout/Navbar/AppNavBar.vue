@@ -16,13 +16,12 @@ export default {
   name: "AppNavBar",
   computed: {
     menu() {
-      return this.$store.getters['app/menu']
+      const items = this.$store.getters['app/menu']
+
+      // return items
+      return items.filter(item => this.isAbleTo(item.permission))
     },
   },
   components: {AppNavItem}
 }
 </script>
-
-<style scoped>
-
-</style>

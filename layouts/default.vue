@@ -5,7 +5,7 @@
 
     <main class="flex flex-col bg-dark text-light min-h-screen pb-4 min-w-0 w-full">
       <app-header class="mb-12" />
-      <div class="overflow-x-auto">
+      <div class="overflow-x-auto h-full">
         <nuxt />
       </div>
     </main>

@@ -16,8 +16,10 @@
       </info-col>
     </info-list>
 
-    <app-btn @click="$router.push(`/cards/providers/${$route.params.id}/edit`)" class="mr-4">Редактировать</app-btn>
-    <app-btn danger>Удалить</app-btn>
+    <app-btn v-if="isAbleTo('providers-update')"
+             @click="$router.push(`/cards/providers/${$route.params.id}/edit`)"
+             class="mr-4">Редактировать</app-btn>
+    <app-btn v-if="isAbleTo('providers-delete')" danger>Удалить</app-btn>
   </app-container>
 </template>
 

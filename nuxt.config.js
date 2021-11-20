@@ -30,8 +30,9 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/persistedstate',
-    '~plugins/datepicker.js',
-    '~plugins/vuelidate.js'
+    '~/plugins/datepicker.js',
+    '~/plugins/vuelidate.js',
+    '~/plugins/permissionsMixin.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -66,7 +67,7 @@ export default {
   },
 
   recaptcha: {
-    siteKey: process.env.RECAPTCHA_SITE_KEY,
+    siteKey: process.env.NOCAPTCHA_SITEKEY,
     version: '3.0',
     theme: 'dark'
   },

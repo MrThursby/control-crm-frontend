@@ -8,7 +8,8 @@
       </page-filters-item>
 
       <page-filters-item>
-        <app-btn @click="$router.push('/phones/create')" class="w-full">Добавить</app-btn>
+        <app-btn v-if="isAbleTo('phones-create')"
+                 @click="$router.push('/phones/create')" class="w-full">Добавить</app-btn>
       </page-filters-item>
     </page-filters>
 

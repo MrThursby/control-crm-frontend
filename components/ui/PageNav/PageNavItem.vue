@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="w-1/2 md:w-1/3 lg:w-auto px-2 mb-4">
     <nuxt-link
       class="block py-3 px-4 rounded-md bg-white bg-opacity-5 font-semibold whitespace-nowrap"
       active-class="active"

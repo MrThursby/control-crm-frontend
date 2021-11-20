@@ -35,7 +35,7 @@
       </div>
     </info-list>
 
-    <app-btn danger>Удалить</app-btn>
+    <app-btn v-if="isAbleTo('financial-log-delete')" danger>Удалить</app-btn>
   </app-container>
 </template>
 

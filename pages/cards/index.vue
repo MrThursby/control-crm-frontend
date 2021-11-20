@@ -55,7 +55,7 @@
         <app-datepicker v-model="filters.range" @input="() => { this.page = 1; reFetch() }" />
       </page-filters-item>
 
-      <page-filters-item>
+      <page-filters-item v-if="isAbleTo('cards-create')">
         <app-btn @click="$router.push('/cards/create')" class="w-full">Добавить</app-btn>
       </page-filters-item>
     </page-filters>
@@ -96,30 +96,36 @@
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.project.show"  nowrap>
             <cards-table-select
+              v-if="isAbleTo('cards-update')"
               @input="value => patchCard(item.id, {
                 project_id: projects.data[value].id
               })"
               :first-value="projects.data.findIndex(project => project.id === item.project.id)"
               :options="projects.data"
             />
+            <span v-else>{{ item.project.title }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.bank.show"  nowrap>
             <cards-table-select
+              v-if="isAbleTo('cards-update')"
               @input="value => patchCard(item.id, {
                 bank_id: banks.data[value].id
               })"
               :first-value="banks.data.findIndex(bank => bank.id === item.bank.id)"
               :options="banks.data"
             />
+            <span v-else>{{ item.bank.title }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.status.show"  nowrap>
             <cards-table-select
+              v-if="isAbleTo('cards-update')"
               @input="value => patchCard(item.id, {
                 status_id: statuses.data[value].id
               })"
               :first-value="statuses.data.findIndex(status => status.id === item.status.id)"
               :options="statuses.data"
             />
+            <span v-else>{{ item.status.title }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.card.show"  nowrap>
             <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
@@ -131,19 +137,21 @@
           <app-table-cell v-show="table_fields.cards.comment.show"  nowrap>{{ item.comment }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.provider.show" nowrap>
             <cards-table-select
+              v-if="isAbleTo('cards-update')"
               @input="value => patchCard(item.id, {
                 provider_id: providers.data[value].id
               })"
               :first-value="providers.data.findIndex(provider => provider.id === item.provider.id)"
               :options="providers.data"
             />
+            <span v-else>{{ item.provider.title }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.created_at.show" nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
       </app-t-body>
     </app-table>
 
-    <div class="bg-black bg-opacity-20 p-4 rounded-md mb-4">
+    <div v-if="selected_rows.length > 0 && isAbleTo('cards-update')" class="bg-black bg-opacity-20 p-4 rounded-md mb-4">
       <div class="flex justify-between items-center">
         <span class="text-xl font-bold">Изменить выбранные</span>
         <app-btn px="4" py="2" @click="show_mass_patch = !show_mass_patch">
@@ -159,6 +167,7 @@
             <div>
               <cards-table-select
                 :first-value="0" up
+                v-model="form.project"
                 :options="[{title: 'Не изменять'}, ...projects.data]"
               />
             </div>
@@ -168,6 +177,7 @@
             <div>
               <cards-table-select
                 :first-value="0" up
+                v-model="form.bank"
                 :options="[{title: 'Не изменять'}, ...banks.data]"
               />
             </div>
@@ -179,6 +189,7 @@
             <div>
               <cards-table-select
                 :first-value="0" up
+                v-model="form.status"
                 :options="[{title: 'Не изменять'}, ...statuses.data]"
               />
             </div>
@@ -188,6 +199,7 @@
             <div>
               <cards-table-select
                 :first-value="0" up
+                v-model="form.provider"
                 :options="[{title: 'Не изменять'}, ...providers.data]"
               />
             </div>
@@ -202,7 +214,7 @@
             ok="Да"
             v-show="show_warning"
             @close="show_warning = false"
-            @ok="show_warning = false"
+            @ok="() => { this.show_warning = false; patchCards() }"
           >
             Внимание, вы изменяете сразу {{ selected_rows.length }} записей.
             Действие нельзя будет отменить.
@@ -274,6 +286,12 @@ export default {
       provider: 0,
       search: '',
     },
+    form: {
+      project: 0,
+      provider: 0,
+      status: 0,
+      bank: 0,
+    },
     selected_rows: [],
     show_settings: false,
     show_warning: false,
@@ -284,6 +302,18 @@ export default {
   methods: {
     async patchCard(card_id, data) {
       await this.$axios.$patch(`/api/admin/cards/${card_id}`, data)
+    },
+    async patchCards() {
+      let data = {}
+      if(this.form.project !== 0)data.project_id = this.projects.data[this.form.project - 1].id
+      if(this.form.status !== 0)data.status_id = this.statuses.data[this.form.status - 1].id
+      if(this.form.provider !== 0)data.provider_id = this.providers.data[this.form.provider - 1].id
+      if(this.form.bank !== 0)data.bank_id = this.banks.data[this.form.bank - 1].id
+
+      console.log(data)
+
+      await this.$axios.$patch(`/api/admin/cards/updates`, {ids: this.selected_rows, ...data})
+      await this.reFetch()
     },
     async reFetch(page) {
       this.page = page || this.page

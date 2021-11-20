@@ -7,7 +7,7 @@
         <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.search" />
       </page-filters-item>
 
-      <page-filters-item>
+      <page-filters-item v-if="isAbleTo('projects-create')">
         <app-btn @click="$router.push('/cards/projects/create')" class="w-full">Добавить</app-btn>
       </page-filters-item>
     </page-filters>

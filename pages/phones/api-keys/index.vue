@@ -7,7 +7,7 @@
         <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.search" />
       </page-filters-item>
 
-      <page-filters-item>
+      <page-filters-item v-if="isAbleTo('api-keys-create')">
         <app-btn @click="$router.push('/phones/api-keys/create')" class="w-full">Добавить</app-btn>
       </page-filters-item>
     </page-filters>

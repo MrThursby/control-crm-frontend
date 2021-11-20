@@ -1,10 +1,8 @@
 <template>
-  <app-container>
+  <app-container class="h-full">
     <page-nav class="flex-wrap w-full">
       <app-datepicker class="w-1/2 md:w-1/3 lg:w-auto px-2 mb-4" to="/debit-cards/provider">Выбрать</app-datepicker>
     </page-nav>
-
-
 
     <div class="flex items-center justify-between">
       <h2 class="text-3xl">Недавние транзакции</h2>
