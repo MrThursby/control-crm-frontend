@@ -72,7 +72,7 @@ export default {
     sm: { type: Boolean, default: false },
     uppercase: { type: Boolean, default: false },
     up: { type: Boolean, default: false },
-    value: { type: Number, default: 0}
+    value: { default: 0}
   }
 }
 </script>

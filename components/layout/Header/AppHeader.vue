@@ -1,13 +1,14 @@
 <template>
   <header class="border-b border-black border-opacity-20 z-10">
     <app-container class="items-center h-16 hidden md:flex">
-      <search-form
+<!--      <search-form
         @submit="submitSearchForm"
         v-model="search"
         rounded-full
-      />
-      <div class="w-full text-right">
-        <app-link tag="button" @click="handleLogout" variant="danger">Выйти</app-link>
+      />-->
+      <div class="w-full flex justify-end gap-4">
+<!--        <app-link to="/profile">Профиль</app-link>-->
+        <app-link tag="button" @click="handleLogout">Выйти</app-link>
       </div>
     </app-container>
     <div class="flex md:hidden h-12 items-center px-4 justify-between">
@@ -48,6 +49,7 @@
         <app-btn
           class="text-danger flex items-center px-4 -mx-4 h-10 mb-2 focus:bg-black focus:bg-opacity-10"
           @click="handleLogout">Выйти</app-btn>
+<!--        <app-btn>Профиль</app-btn>-->
       </div>
     </div>
   </header>
@@ -60,6 +62,7 @@ import AppLink from "../../ui/Links/AppLink";
 import focus from 'vue-focus'
 import SearchForm from "../../ui/Form/SearchForm";
 import AppBtn from "../../ui/Buttons/AppBtn";
+import AppSelect from "../../ui/Form/AppSelect";
 export default {
   name: "AppHeader",
   data() { return {
@@ -81,7 +84,7 @@ export default {
     },
   },
   directives: {focus},
-  components: {AppBtn, SearchForm, AppLink, AppInput, AppContainer}
+  components: {AppSelect, AppBtn, SearchForm, AppLink, AppInput, AppContainer}
 }
 </script>
 

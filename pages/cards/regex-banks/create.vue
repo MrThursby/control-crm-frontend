@@ -87,7 +87,7 @@ export default {
   name: "CardsCreate",
   async fetch({store}) {
     await store.dispatch('cards/banks/fetchPaginator')
-    await store.dispatch('cards/types/fetchPaginator')
+    await store.dispatch('cards/types/fetchList')
   },
   data() {
     return {
@@ -136,7 +136,7 @@ export default {
   computed: {
     ...mapGetters({
       banks: 'cards/banks/paginator',
-      types: 'cards/types/paginator'
+      types: 'cards/types/list'
     })
   },
   components: {

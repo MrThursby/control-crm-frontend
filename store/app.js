@@ -4,6 +4,8 @@ export const state = () => ({
     { to: '/cards', title: 'cards', icon: ['fas', 'credit-card'], exact: false, permission: 'cards-read' },
     { to: '/phones', title: 'phones', icon: ['fa', 'sim-card'], exact: false, permission: 'phones-read' },
     { to: '/exchanges', title: 'exchanges', icon: ['fa', 'exchange-alt'], exact: false, permission: 'exchanges-read' },
+    { to: '/users', title: 'users', icon: ['fa', 'user'], exact: false, permission: 'exchanges-read' },
+    { to: '/audit', title: 'audit', icon: ['fa', 'file-alt'], exact: false, permission: 'exchanges-read' },
   ],
   per_page: 0,
   per_page_options: [
