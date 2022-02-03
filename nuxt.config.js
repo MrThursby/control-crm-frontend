@@ -76,7 +76,7 @@ export default {
     theme: 'dark'
   },
 
-  proxy: {
+  proxy: process.env.USE_PROXY ? {
     '/api': {
       target: `${process.env.API_URL}/`,
       changeOrigin: true
@@ -89,7 +89,7 @@ export default {
       target: `${process.env.API_URL}/`,
       changeOrigin: true,
     },
-  },
+  }: false,
 
   auth: {
     redirect: {
