@@ -66,7 +66,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    proxy: process.env.USE_PROXY || true,
+    proxy: true,
     credentials: true,
   },
 
@@ -76,20 +76,20 @@ export default {
     theme: 'dark'
   },
 
-  proxy: process.env.USE_PROXY ? {
+  proxy: {
     '/api': {
       target: `${process.env.API_URL}/`,
-      changeOrigin: true
+      changeOrigin: process.env.CHANGE_ORIGIN
     },
     '/auth': {
       target: `${process.env.API_URL}/`,
-      changeOrigin: true,
+      changeOrigin: process.env.CHANGE_ORIGIN,
     },
     '/sanctum': {
       target: `${process.env.API_URL}/`,
-      changeOrigin: true,
+      changeOrigin: process.env.CHANGE_ORIGIN,
     },
-  }: false,
+  },
 
   auth: {
     redirect: {
