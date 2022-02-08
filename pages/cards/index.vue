@@ -130,7 +130,7 @@
           <app-table-cell v-show="table_fields.cards.card.show"  nowrap>
             <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
           </app-table-cell>
-          <app-table-cell v-show="table_fields.cards.phone.show"  nowrap>+{{ item.phone }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.phone.show"  nowrap>{{ item.phone }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.fio.show"  nowrap>{{ item.fio }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.codeword.show"  nowrap>{{ item.codeword }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.link_photo.show"  nowrap>{{ item.link_photo }}</app-table-cell>
