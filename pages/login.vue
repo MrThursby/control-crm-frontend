@@ -51,9 +51,9 @@ export default {
   },
   methods: {
     async submit() {
-      await this.$axios.$get('/sanctum/csrf-cookie').then(() => {
-        this.$recaptcha.getResponse().then(token => {
-          this.$auth.loginWith('local', {
+      // await this.$axios.$get('/sanctum/csrf-cookie').then(() => {
+        await this.$recaptcha.getResponse().then(token => {
+          this.$auth.loginWith('laravelSanctum', {
             data: {
               ...this.form,
               device_name: navigator.userAgent,
@@ -61,14 +61,14 @@ export default {
             }
           }).then(() => {
             this.$router.push('/')
-            this.$recaptcha.reset()
           }).catch(e => {
+            this.$recaptcha.reset()
             if (e.code === 422) {
               this.error = 'Неверный логин или пароль'
             }
           })
         })
-      })
+      // })
     }
   },
   components: {AppBtn, AppFormGroup, AppInput}

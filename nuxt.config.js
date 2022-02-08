@@ -99,13 +99,17 @@ export default {
       home: '/'
     },
     strategies: {
-      local: {
+      laravelSanctum: {
+        provider: 'laravel/sanctum',
+        cookie: {
+          name: 'XSRF-TOKEN',
+        },
         url: process.env.API_URL,
         endpoints: {
           csrf: { url: '/sanctum/csrf-cookie' },
           login: { url: '/auth/login', method: 'post' },
-          user: { url: '/api/user', method: 'get' },
-          logout: false
+          user: { url: '/api/user', method: 'get', property: 'user' },
+          logout: { url: '/auth/logout', method: 'post' }
         }
       }
     }
