@@ -118,7 +118,6 @@
           :invalid="errors.phone.length !== 0 || $v.form.phone.$error"
         >
           <app-input
-            unmask
             v-model="form.phone"
             :invalid="errors.phone.length !== 0 || $v.form.phone.$error"
             @input="$v.form.phone.$touch"
