@@ -119,7 +119,6 @@
         >
           <app-input
             unmask
-            :mask="'+{7}(000)000-00-00'"
             v-model="form.phone"
             :invalid="errors.phone.length !== 0 || $v.form.phone.$error"
             @input="$v.form.phone.$touch"
