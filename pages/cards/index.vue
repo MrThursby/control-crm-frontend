@@ -1,5 +1,5 @@
 <template>
-  <app-container>
+  <app-container class="flex flex-col">
     <cards-nav class="mb-8"/>
 
     <page-filters class="flex flex-wrap">

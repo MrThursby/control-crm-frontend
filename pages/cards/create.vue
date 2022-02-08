@@ -193,9 +193,6 @@
             @input="$v.form.link_photo.$touch"
           />
           <template #errors>
-            <app-form-group-error v-if="!$v.form.link_photo.required">
-              Это обязательное поле
-            </app-form-group-error>
             <app-form-group-error v-if="!$v.form.link_photo.url">
               Это поле должно содержать ссылку
             </app-form-group-error>
@@ -206,18 +203,12 @@
           class="mb-4"
           label="Комментарий"
           :errors="errors.comment"
-          :invalid="errors.comment.length !== 0 || $v.form.comment.$error"
+          :invalid="errors.comment.length !== 0"
         >
           <app-input
             v-model="form.comment"
-            :invalid="errors.comment.length !== 0 || $v.form.comment.$error"
-            @input="$v.form.comment.$touch"
+            :invalid="errors.comment.length !== 0"
           />
-          <template #errors>
-            <app-form-group-error v-if="!$v.form.link_photo.required">
-              Это обязательное поле
-            </app-form-group-error>
-          </template>
         </app-form-group>
       </div>
     </div>
@@ -289,8 +280,7 @@ export default {
       login: {required},
       password_ib: {required},
       codeword: {required},
-      link_photo: {required, url},
-      comment: {required},
+      link_photo: {url},
     }
   },
   methods: {
