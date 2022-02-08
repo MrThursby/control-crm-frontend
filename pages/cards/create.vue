@@ -115,8 +115,6 @@
           :invalid="errors.phone.length !== 0 || $v.form.phone.$error"
         >
           <app-input
-            unmask
-            :mask="'+{7}(000)000-00-00'"
             v-model="form.phone"
             :invalid="errors.phone.length !== 0 || $v.form.phone.$error"
             @input="$v.form.phone.$touch"
@@ -124,9 +122,6 @@
           <template #errors>
             <app-form-group-error v-if="!$v.form.phone.required">
               Это обязательное поле
-            </app-form-group-error>
-            <app-form-group-error v-if="!$v.form.phone.numeric || !$v.form.phone.minValue || $v.form.phone.maxValue">
-              Это поле должно создержать номер телефона
             </app-form-group-error>
           </template>
         </app-form-group>
@@ -290,7 +285,7 @@ export default {
     form: {
       card: {required, minLength: minLength(16), maxLength: maxLength(16)},
       fio: {required},
-      phone: {required, numeric, minValue: minValue(70000000000), maxValue: maxValue(79999999999)},
+      phone: {required},
       login: {required},
       password_ib: {required},
       codeword: {required},
