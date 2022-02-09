@@ -5,6 +5,7 @@ export default {
     host: '0.0.0.0',
     port: 3000,
   },
+  mode: 'spa',
   loading: {
     color: '#6556ff',
     height: '4px',
