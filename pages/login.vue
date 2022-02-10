@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       error: '',
+      recaptcha_id: null,
       form: {
         username: '',
         password: '',
@@ -51,25 +52,27 @@ export default {
   },
   methods: {
     async submit() {
-      // await this.$axios.$get('/sanctum/csrf-cookie').then(() => {
-        await this.$recaptcha.getResponse().then(token => {
-          this.$auth.loginWith('laravelSanctum', {
-            data: {
-              ...this.form,
-              device_name: navigator.userAgent,
-              'g-recaptcha-response': token
-            }
-          }).then(() => {
-            this.$router.push('/')
-          }).catch(e => {
-            this.$recaptcha.reset()
-            if (e.code === 422) {
-              this.error = 'Неверный логин или пароль'
-            }
-          })
+      try {
+        const token = await this.$recaptcha.getResponse()
+
+        await this.$auth.loginWith('laravelSanctum', {
+          data: {
+            ...this.form,
+            device_name: navigator.userAgent,
+            'g-recaptcha-response': token
+          }
+        }).then(() => {
+          this.$router.push('/')
+        }).catch(e => {
+          if (e.code === 422) {
+            this.error = 'Неверный логин или пароль'
+          }
         })
-      // })
-    }
+        await this.$recaptcha.reset()
+      } catch (e) {
+        console.log(e)
+      }
+    },
   },
   components: {AppBtn, AppFormGroup, AppInput}
 }

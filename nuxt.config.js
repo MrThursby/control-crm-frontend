@@ -73,7 +73,8 @@ export default {
 
   recaptcha: {
     siteKey: process.env.NOCAPTCHA_SITEKEY,
-    version: '3.0',
+    version: 2,
+    hideBadge: true,
     theme: 'dark'
   },
 
