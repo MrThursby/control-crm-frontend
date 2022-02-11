@@ -185,18 +185,12 @@
           class="mb-4"
           label="Ссылка на фото"
           :errors="errors.link_photo"
-          :invalid="errors.link_photo.length !== 0 || $v.form.link_photo.$error"
+          :invalid="errors.link_photo.length !== 0"
         >
           <app-input
             v-model="form.link_photo"
-            :invalid="errors.link_photo.length !== 0 || $v.form.link_photo.$error"
-            @input="$v.form.link_photo.$touch"
+            :invalid="errors.link_photo.length !== 0"
           />
-          <template #errors>
-            <app-form-group-error v-if="!$v.form.link_photo.url">
-              Это поле должно содержать ссылку
-            </app-form-group-error>
-          </template>
         </app-form-group>
 
         <app-form-group
@@ -279,8 +273,7 @@ export default {
       phone: {required},
       login: {required},
       password_ib: {required},
-      codeword: {required},
-      link_photo: {url},
+      codeword: {required}
     }
   },
   methods: {
