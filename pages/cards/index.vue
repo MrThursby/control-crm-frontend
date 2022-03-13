@@ -46,7 +46,7 @@
           v-model="filters.status"
           :options="[
             { id: 0, title: 'Любой статус' },
-          ].concat(statuses.data)"
+          ].concat( statusesFilterItems )"
           @input="() => { this.page = 1; reFetch() }"
         />
       </page-filters-item>
@@ -369,7 +369,13 @@ export default {
 
       per_page: 'app/per_page',
       per_page_options: 'app/per_page_options',
-    })
+    }),
+
+    statusesFilterItems() {
+      return this.statuses.data.map(status => {
+        return { ...status, title: [status.title, status.cards_count].join(' - ') }
+      })
+    }
   },
   watch: {
     selected_rows: function (v) {

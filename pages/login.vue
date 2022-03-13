@@ -77,7 +77,3 @@ export default {
   components: {AppBtn, AppFormGroup, AppInput}
 }
 </script>
-
-<style scoped>
-
-</style>
