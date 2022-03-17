@@ -1,6 +1,6 @@
 <template>
   <component
-    class="underline"
+    class="underline text-primary-light"
     @click="$emit('click', $event)"
     :is="tag"
     :to="to"

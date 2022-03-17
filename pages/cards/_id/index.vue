@@ -32,7 +32,7 @@
           </info-col>
         </div>
       </div>
-      <info-col>
+      <info-col v-if="false">
         <h1 class="text-bold text-2xl mb-4">Финансовый лог</h1>
         <info-item name="Баланс">Иванов Иван Иванович</info-item>
         <info-item name="Поступления">Иванов Иван Иванович</info-item>

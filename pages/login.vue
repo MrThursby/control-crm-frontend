@@ -24,6 +24,7 @@
       <app-form-group class="mb-4 flex justify-center">
         <recaptcha data-theme="dark" />
       </app-form-group>
+      <p v-if="error" class="text-red-500 text-center mb-4">{{ error }}</p>
       <app-form-group class="sm:text-center">
         <app-btn>Войти</app-btn>
       </app-form-group>
@@ -55,22 +56,22 @@ export default {
       try {
         const token = await this.$recaptcha.getResponse()
 
-        await this.$auth.loginWith('laravelSanctum', {
+        await this.$auth.loginWith('local', {
           data: {
-            ...this.form,
+            login: this.form.username,
+            password: this.form.password,
             device_name: navigator.userAgent,
             'g-recaptcha-response': token
           }
-        }).then(() => {
-          this.$router.push('/')
-        }).catch(e => {
-          if (e.code === 422) {
-            this.error = 'Неверный логин или пароль'
-          }
         })
+
         await this.$recaptcha.reset()
       } catch (e) {
         console.log(e)
+
+        if (e.response && (e.response.status === 404 || e.response.status === 403)) {
+          this.error = 'Неверный логин или пароль'
+        }
       }
     },
   },

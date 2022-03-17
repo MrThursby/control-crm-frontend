@@ -95,26 +95,10 @@
             <span class="span-id">{{ item.id }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.project.show"  nowrap>
-            <cards-table-select
-              v-if="isAbleTo('cards-update')"
-              @input="value => patchCard(item.id, {
-                project_id: projects.data[value].id
-              })"
-              :first-value="projects.data.findIndex(project => project.id === item.project.id)"
-              :options="projects.data"
-            />
-            <span v-else>{{ item.project.title }}</span>
+            <app-link :to="`/cards/projects/${item.project.id}`">{{ item.project.title }}</app-link>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.bank.show"  nowrap>
-            <cards-table-select
-              v-if="isAbleTo('cards-update')"
-              @input="value => patchCard(item.id, {
-                bank_id: banks.data[value].id
-              })"
-              :first-value="banks.data.findIndex(bank => bank.id === item.bank.id)"
-              :options="banks.data"
-            />
-            <span v-else>{{ item.bank.title }}</span>
+            <app-link :to="`/cards/banks/${item.bank.id}`">{{ item.bank.title }}</app-link>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.status.show"  nowrap>
             <cards-table-select
@@ -131,20 +115,12 @@
             <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.phone.show"  nowrap>{{ item.phone }}</app-table-cell>
-          <app-table-cell v-show="table_fields.cards.fio.show"  nowrap>{{ item.fio }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.fio.show">{{ item.fio }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.codeword.show"  nowrap>{{ item.codeword }}</app-table-cell>
-          <app-table-cell v-show="table_fields.cards.link_photo.show"  nowrap>{{ item.link_photo }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.link_photo.show">{{ item.link_photo }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.comment.show"  nowrap>{{ item.comment }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.provider.show" nowrap>
-            <cards-table-select
-              v-if="isAbleTo('cards-update')"
-              @input="value => patchCard(item.id, {
-                provider_id: providers.data[value].id
-              })"
-              :first-value="providers.data.findIndex(provider => provider.id === item.provider.id)"
-              :options="providers.data"
-            />
-            <span v-else>{{ item.provider.title }}</span>
+            <app-link :to="`/cards/providers/${item.provider.id}`">{{ item.provider.title }}</app-link>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.created_at.show" nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
@@ -301,7 +277,7 @@ export default {
   }),
   methods: {
     async patchCard(card_id, data) {
-      await this.$axios.$patch(`/api/admin/cards/${card_id}`, data)
+      await this.$axios.$patch(`/api/admin/cards/updates`, { ids: [card_id], ...data })
     },
     async patchCards() {
       let data = {}
@@ -314,6 +290,7 @@ export default {
 
       await this.$axios.$patch(`/api/admin/cards/updates`, {ids: this.selected_rows, ...data})
       await this.reFetch()
+      this.selected_rows = []
     },
     async reFetch(page) {
       this.page = page || this.page

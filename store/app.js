@@ -16,14 +16,16 @@ export const state = () => ({
   ],
   status_colors: {
     default: '#ffffff',
-    green: '#10b981',
+    pink: '#f916d7',
+    green: '#1efc3f',
     orange: '#ff6a00',
-    blue: '#2196f3',
+    blue: '#01037c',
     red: '#ff3a3a',
     yellow: '#ffeb3b',
-    purple: '#6556ff',
+    purple: '#2c013c',
     black: '#777f9e',
     brown: '#bf775c',
+    turquoise: '#07f8fc',
   },
   tables: {
     cards: {

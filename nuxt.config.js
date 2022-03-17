@@ -5,7 +5,7 @@ export default {
     host: '0.0.0.0',
     port: 3000,
   },
-  mode: 'spa',
+  // mode: 'spa',
   loading: {
     color: '#6556ff',
     height: '4px',
@@ -86,11 +86,7 @@ export default {
     '/auth': {
       target: `${process.env.API_URL}/`,
       changeOrigin: process.env.CHANGE_ORIGIN,
-    },
-    '/sanctum': {
-      target: `${process.env.API_URL}/`,
-      changeOrigin: process.env.CHANGE_ORIGIN,
-    },
+    }
   },
 
   auth: {
@@ -101,15 +97,21 @@ export default {
       home: '/'
     },
     strategies: {
-      laravelSanctum: {
-        provider: 'laravel/sanctum',
-        cookie: {
-          name: 'XSRF-TOKEN',
+      local: {
+        scheme: 'refresh',
+        token: {
+          property: 'token',
+          maxAge: 60 * 5, // 5 min
+          global: true
         },
-        url: process.env.API_URL,
+        refreshToken: {
+          property: 'refresh_token',
+          maxAge: 60 * 60 * 24 * 10, // 10 days 
+          global: true
+        },
         endpoints: {
-          csrf: { url: '/sanctum/csrf-cookie' },
           login: { url: '/auth/login', method: 'post' },
+          refresh: { url: '/auth/refresh-token', method: 'post',/*  property: 'token' */ },
           user: { url: '/api/user', method: 'get', property: 'user' },
           logout: { url: '/auth/logout', method: 'post' }
         }
