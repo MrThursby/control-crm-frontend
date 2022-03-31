@@ -7,7 +7,7 @@
         rounded-full
       />-->
       <div class="w-full flex justify-end gap-4">
-<!--        <app-link to="/profile">Профиль</app-link>-->
+        <app-link to="/profile">Профиль</app-link>
         <app-link tag="button" @click="handleLogout">Выйти</app-link>
       </div>
     </app-container>
@@ -49,7 +49,7 @@
         <app-btn
           class="text-danger flex items-center px-4 -mx-4 h-10 mb-2 focus:bg-black focus:bg-opacity-10"
           @click="handleLogout">Выйти</app-btn>
-<!--        <app-btn>Профиль</app-btn>-->
+        <app-btn to="/profile">Профиль</app-btn>
       </div>
     </div>
   </header>

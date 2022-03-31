@@ -58,7 +58,7 @@
         >
           <app-select
             v-model="form.bank"
-            :options="banks.data"
+            :options="banks"
             :invalid="errors.bank.length !== 0"
           />
         </app-form-group>
@@ -71,7 +71,7 @@
         >
           <app-select
             v-model="form.provider"
-            :options="providers.data"
+            :options="providers"
             :invalid="errors.provider.length !== 0"
           />
         </app-form-group>
@@ -238,10 +238,10 @@ export default {
     return {
       form: {
         card: '',
-        status: 0,
+        status: 1,
         bank: 0,
         provider: 0,
-        project: 0,
+        project: 5,
         fio: '',
         phone: '',
         login: '',
@@ -312,10 +312,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      providers: 'cards/providers/paginator',
+      providers: 'cards/providers/sortedItems',
       projects: 'cards/projects/paginator',
       statuses: 'cards/statuses/paginator',
-      banks: 'cards/banks/paginator',
+      banks: 'cards/banks/sortedItems',
     })
   },
   components: {

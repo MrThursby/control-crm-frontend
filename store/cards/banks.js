@@ -30,5 +30,6 @@ export const actions = {
 
 export const getters = {
   paginator: state => state.paginator,
+  sortedItems: ({ paginator: { data } }) => [...data].sort((a, b) => a.cards_count > b.cards_count ? -1 : 1), 
   item: state => state.item
 }

@@ -4,6 +4,7 @@
       <span class="block mb-2">{{ label }}</span>
       <slot />
     </label>
+    <div v-if="!invalid" class="mt-2 text-white text-opacity-60"><slot name="description" /></div>
     <div v-if="invalid" class="mt-2">
       <app-form-group-error
         v-for="(error, index) of errors"

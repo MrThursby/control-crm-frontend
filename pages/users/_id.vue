@@ -18,7 +18,7 @@
         <info-item name="Логин">{{ user.login }}</info-item>
         <info-item name="Email">{{ user.email }}</info-item>
         <info-item v-if="user.roles" name="Роль">{{ user.roles.length !== 0 ? user.roles[0].display_name : 'Нет роли' }}</info-item>
-        <info-item name="Добавлен">{{user.created_at ? $moment(item.created_at).format('LLL') : 'Неизвестно' }}</info-item>
+        <info-item name="Добавлен">{{user.created_at ? $moment(user.created_at).format('LLL') : 'Неизвестно' }}</info-item>
       </info-col>
     </info-list>
   </app-container>
@@ -34,7 +34,7 @@ import InfoCol from "../../components/ui/InfoList/InfoCol";
 import InfoItem from "../../components/ui/InfoList/InfoItem";
 export default {
   name: "UsersShow",
-  fetch: async function({ store, params: { id } }) {
+  async fetch({ store, params: { id } }) {
     await store.dispatch('users/fetchItem', id)
   },
   computed: {
