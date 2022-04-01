@@ -23,12 +23,12 @@ export default {
   components: {AppModal},
   computed: {
     ...mapGetters({
-      fields: 'app/tables'
+      fields: 'persisted/tables'
     })
   },
   methods: {
     ...mapMutations({
-      setFieldShow: 'app/setTableFieldShow'
+      setFieldShow: 'persisted/setTableFieldShow'
     })
   },
   props: {

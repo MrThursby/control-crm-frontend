@@ -68,7 +68,7 @@ export default {
     let per_page_options = store.getters["app/per_page_options"]
 
     await store.dispatch('audit/fetchPaginator', {
-      per_page: per_page_options[store.getters["app/per_page"]].id
+      per_page: per_page_options[store.getters["persisted/per_page"]].id
     })
   },
   data: () => ({
@@ -88,7 +88,7 @@ export default {
     ...mapGetters({
       paginator: 'audit/paginator',
 
-      per_page: 'app/per_page',
+      per_page: 'persisted/per_page',
       per_page_options: 'app/per_page_options'
     })
   },

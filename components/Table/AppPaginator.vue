@@ -18,7 +18,7 @@ export default {
   components: {AppBtn, AppSelect},
   computed: {
     ...mapGetters({
-      per_page: 'app/per_page',
+      per_page: 'persisted/per_page',
       per_page_options: 'app/per_page_options'
     }),
     pages() {
@@ -36,7 +36,7 @@ export default {
       this.$emit('input', value)
     },
     changePerPage(value) {
-      this.$store.dispatch('app/changePerPage', value)
+      this.$store.dispatch('persisted/changePerPage', value)
       this.$emit('perPageUpdated', value)
     }
   },

@@ -10,7 +10,7 @@
     :value="value"
     :placeholder="placeholder"
 
-    :mask="mask || false"
+    :mask="mask"
     :unmask="unmask"
 
     @focus="$emit('focus')"
@@ -31,7 +31,7 @@ export default {
     placeholder: { type: String, default: '' },
     px: { type: Number, default: 4 },
     h: { type: Number, default: 12 },
-    mask: { default: () => { return { lazy: true } } },
+    mask: { default: () => { return { lazy: true, mask: undefined } } },
     unmask: { type: Boolean, default: false },
     invalid: { type: Boolean, default: false }
   },
@@ -40,7 +40,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

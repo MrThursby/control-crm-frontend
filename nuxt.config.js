@@ -34,7 +34,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/persistedstate',
+    '~/plugins/persistedstate.js',
     '~/plugins/datepicker.js',
     '~/plugins/vuelidate.js',
     '~/plugins/permissionsMixin.js'
@@ -124,8 +124,8 @@ export default {
     suffix: true,
     icons: {
       solid: [
-        'faCog', 'faHome', 'faSearch', 'faSimCard', 'faCreditCard', 'faExchangeAlt', 'faBars', 'faTimes',
-        'faChevronDown', 'faUser', 'faFileAlt'
+        'faGear', 'faHouse', 'faMagnifyingGlass', 'faSimCard', 'faCreditCard', 'faArrowRightArrowLeft', 'faBars', 'faXmark',
+        'faChevronDown', 'faUser', 'faFileLines', 'faRotate'
       ]
     }
   },

@@ -9,7 +9,7 @@
       <div class="p-4 border-b border-black border-opacity-20 flex justify-between">
         <span>{{ title }}</span>
         <span class="cursor-pointer" @click="$emit('close')">
-          <fa-icon icon="times" />
+          <fa-icon icon="xmark" />
         </span>
       </div>
       <div class="p-4 border-b border-black border-opacity-20">

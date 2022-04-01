@@ -6,7 +6,7 @@
               'text-light': focused,
               'text-primary': !focused,
             }"
-      icon="search"
+      icon="magnifying-glass"
     />
     <app-input
       @input="$emit('input', value)"

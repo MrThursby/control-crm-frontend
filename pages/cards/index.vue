@@ -4,11 +4,23 @@
 
     <page-filters class="flex flex-wrap">
       <page-filters-item>
-        <app-btn @click="show_settings = true"><fa-icon icon="cog" /></app-btn>
+        <app-btn @click="show_settings = true"><fa-icon icon="gear" /></app-btn>
+      </page-filters-item>
+
+      <page-filters-item>
+        <app-btn @click="reFetch"><fa-icon icon="rotate" /></app-btn>
+      </page-filters-item>
+
+      <page-filters-item>
+        <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.searchQuery" />
       </page-filters-item>
 
       <page-filters-item class="mr-auto">
-        <search-form @submit="() => { this.page = 1; reFetch() }" v-model="filters.search" />
+        <app-select
+          v-model="filters.searchField" 
+          :options="searchFields"
+          @input="() => { if(filters.searchQuery !== '') {this.page = 1; reFetch()} }"
+        />
       </page-filters-item>
 
       <page-filters-item>
@@ -245,7 +257,7 @@ export default {
     let per_page_options = store.getters["app/per_page_options"]
 
     await store.dispatch('cards/fetchPaginator', {
-      per_page: per_page_options[store.getters["app/per_page"]].id
+      per_page: per_page_options[store.getters["persisted/per_page"]].id
     });
 
     await store.dispatch('cards/banks/fetchPaginator');
@@ -260,7 +272,8 @@ export default {
       bank: 0,
       project: 0,
       provider: 0,
-      search: '',
+      searchQuery: '',
+      searchField: 0,
     },
     form: {
       project: 0,
@@ -268,6 +281,13 @@ export default {
       status: 0,
       bank: 0,
     },
+    searchFields: [
+      { id: 0, value: null, title: 'Все поля' },
+      { id: 1, value: 'phone', title: 'Номер телефона' },
+      { id: 2, value: 'card', title: 'Номер карты' },
+      { id: 3, value: 'fio', title: 'ФИО' },
+      { id: 4, value: 'id', title: '#' },
+    ],
     selected_rows: [],
     show_settings: false,
     show_warning: false,
@@ -313,8 +333,11 @@ export default {
       if (this.filters.provider !== 0) {
         filters.provider_id = this.providers.data[this.filters.provider - 1].id
       }
-      if (this.filters.search !== '') {
+      if (this.filters.searchQuery !== '') {
         filters.search = this.filters.search
+      }
+      if (this.filters.searchQuery !== '' && this.filters.searchField !== null) {
+        filters.search = [this.filters.searchQuery, this.searchFields[this.filters.searchField].value ]
       }
 
       await this.$store.dispatch('cards/fetchPaginator', {
@@ -342,9 +365,9 @@ export default {
       projects: 'cards/projects/paginator',
       statuses: 'cards/statuses/paginator',
 
-      table_fields: 'app/tables',
+      table_fields: 'persisted/tables',
 
-      per_page: 'app/per_page',
+      per_page: 'persisted/per_page',
       per_page_options: 'app/per_page_options',
     }),
 

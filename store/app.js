@@ -1,13 +1,12 @@
 export const state = () => ({
   menu: [
-    { to: '/', title: 'home', icon: ['fas', 'home'], exact: true, permission: null },
-    { to: '/cards', title: 'cards', icon: ['fas', 'credit-card'], exact: false, permission: 'cards-read' },
-    { to: '/phones', title: 'phones', icon: ['fa', 'sim-card'], exact: false, permission: 'phones-read' },
-    { to: '/exchanges', title: 'exchanges', icon: ['fa', 'exchange-alt'], exact: false, permission: 'exchanges-read' },
-    { to: '/users', title: 'users', icon: ['fa', 'user'], exact: false, permission: 'users-panel-read' },
-    { to: '/audit', title: 'audit', icon: ['fa', 'file-alt'], exact: false, permission: 'exchanges-read' },
+    { to: '/', title: 'Консоль', icon: ['fas', 'house'], exact: true, permission: null },
+    { to: '/cards', title: 'Дебетовые карты', icon: ['fas', 'credit-card'], exact: false, permission: 'cards-read' },
+    { to: '/phones', title: 'Номера телефонов', icon: ['fa', 'sim-card'], exact: false, permission: 'phones-read' },
+    { to: '/exchanges', title: 'Обмены', icon: ['fa', 'arrow-right-arrow-left'], exact: false, permission: 'exchanges-read' },
+    { to: '/users', title: 'Польщователи', icon: ['fa', 'user'], exact: false, permission: 'users-panel-read' },
+    { to: '/audit', title: 'Лог', icon: ['fa', 'file-lines'], exact: false, permission: 'exchanges-read' },
   ],
-  per_page: 0,
   per_page_options: [
     { id: 10, title: '10 записей' },
     { id: 25, title: '25 записей' },
@@ -26,44 +25,11 @@ export const state = () => ({
     black: '#777f9e',
     brown: '#bf775c',
     turquoise: '#07f8fc',
-  },
-  tables: {
-    cards: {
-      id: { title: '#', show: true },
-      project: { title: 'Проект', show: true },
-      bank: { title: 'Банк', show: true },
-      status: { title: 'Статус', show: true },
-      card: { title: 'Номер карты', show: true },
-      phone: { title: 'Номер телефона', show: true },
-      fio: { title: 'ФИО', show: true },
-      codeword: { title: 'Кодовое слово', show: true },
-      link_photo: { title: 'Ссылка на фото', show: true },
-      comment: { title: 'Комментарий', show: true },
-      provider: { title: 'Поставщик', show: true },
-      created_at: { title: 'Добавлено', show: true },
-    },
   }
 })
-
-export const mutations = {
-  setPerPage(state, per_page) {
-    state.per_page = per_page
-  },
-  setTableFieldShow(state, {show, table, field}) {
-    state.tables[table][field].show = show
-  }
-}
-
-export const actions = {
-  async changePerPage({ commit }, per_page){
-    commit("setPerPage", per_page)
-  }
-}
 
 export const getters = {
   menu: state => state.menu,
   per_page_options: state => state.per_page_options,
-  per_page: state => state.per_page,
   status_colors: state => state.status_colors,
-  tables: state => state.tables
 }

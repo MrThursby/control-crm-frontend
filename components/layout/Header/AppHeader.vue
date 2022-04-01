@@ -12,12 +12,12 @@
       </div>
     </app-container>
     <div class="flex md:hidden h-12 items-center px-4 justify-between">
-      <div>
+      <div v-if="false">
         <button
           v-show="!mobileSearchOpened"
           @click="mobileSearchOpened = true"
         >
-          <fa-icon class="text-xl" icon="search" />
+          <fa-icon class="text-xl" icon="magnifying-glass" />
         </button>
         <search-form
           @submit="submitSearchForm"
@@ -29,10 +29,10 @@
           md
         />
       </div>
-      <div>
+      <div class="ml-auto">
         <button class="text-2xl" @click="mobileMenuOpened = !mobileMenuOpened">
           <fa-icon v-if="!mobileMenuOpened" icon="bars" />
-          <fa-icon v-if="mobileMenuOpened" icon="times" />
+          <fa-icon v-if="mobileMenuOpened" icon="xmark" />
         </button>
       </div>
       <div v-show="mobileMenuOpened" class="flex flex-col absolute py-6 top-12 bottom-0 left-0 right-0 mt-px bg-dark px-4">
