@@ -97,11 +97,11 @@
         </app-table-h-row>
       </app-t-head>
       <app-t-body>
-        <app-table-row class="row" v-for="(item, index) of cards.data" :key="index">
+        <app-table-row class="row" v-for="item of cards.data" :key="item.id">
           <app-table-cell v-show="table_fields.cards.id.show" class="pl-4" center>
             <input v-model="selected_rows"
                    :value="item.id"
-                   :name="`item-${index}`"
+                   :name="`item-${item.id}`"
                    class="hidden checkbox" type="checkbox"
             />
             <span class="span-id">{{ item.id }}</span>
