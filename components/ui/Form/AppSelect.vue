@@ -27,7 +27,7 @@
       ><img src="~assets/arrow.svg" alt="Open" /></span>
     </div>
     <VueScrollbar
-      :speed="2500"
+      :speed="220"
       ref="items-list"
       :class="[ 'items-wrapper', {
           'border-transparent': !opened,
