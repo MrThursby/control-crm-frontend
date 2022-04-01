@@ -295,8 +295,8 @@ export default {
       formData.append('comment', this.form.comment)
 
       formData.append('status_id', this.statuses.data[this.form.status].id)
-      formData.append('bank_id', this.banks.data[this.form.bank].id)
-      formData.append('provider_id', this.providers.data[this.form.provider].id)
+      formData.append('bank_id', this.banks[this.form.bank].id)
+      formData.append('provider_id', this.providers[this.form.provider].id)
       formData.append('project_id', this.projects.data[this.form.project].id)
 
       await this.$axios.$post('/api/admin/cards', formData)

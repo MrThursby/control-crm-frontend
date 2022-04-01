@@ -42,7 +42,7 @@
     </info-list>
 
     <app-btn @click="$router.push(`/cards/${$route.params.id}/edit`)" class="mr-4">Редактировать</app-btn>
-    <app-btn danger>Удалить</app-btn>
+    <app-btn @click="deleteItem" danger>Удалить</app-btn>
   </app-container>
 </template>
 
@@ -53,7 +53,7 @@ import BreadcrumbsItem from "../../../components/ui/Breadcrumbs/BreadcrumbsItem"
 import InfoItem from "../../../components/ui/InfoList/InfoItem";
 import InfoList from "../../../components/ui/InfoList/InfoList";
 import AppBtn from "../../../components/ui/Buttons/AppBtn";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import InfoCol from "../../../components/ui/InfoList/InfoCol";
 export default {
   name: "DebitCardsShow",
@@ -64,6 +64,19 @@ export default {
     ...mapGetters({
       card: 'cards/item'
     })
+  },
+  methods: {
+    ...mapActions({
+      delete: 'cards/deleteItem'
+    }),
+    async deleteItem() {
+      try {
+        await this.delete(this.$route.params.id)
+        await this.$router.push('/cards')
+      } catch(e) {
+        console.log(e);
+      }
+    }
   },
   components: {InfoCol, AppBtn, InfoList, InfoItem, BreadcrumbsItem, BreadcrumbsList, AppContainer}
 }
