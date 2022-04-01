@@ -64,14 +64,14 @@ export default {
             'g-recaptcha-response': token
           }
         })
-
-        await this.$recaptcha.reset()
       } catch (e) {
         console.log(e)
 
         if (e.response && (e.response.status === 404 || e.response.status === 403)) {
           this.error = 'Неверный логин или пароль'
         }
+      } finally {
+        await this.$recaptcha.reset()
       }
     },
   },
