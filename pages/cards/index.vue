@@ -345,6 +345,8 @@ export default {
         page: this.page,
         ...filters
       })
+      
+      this.$forceUpdate()
     },
     selectAll() {
       if(this.all_checked) {
