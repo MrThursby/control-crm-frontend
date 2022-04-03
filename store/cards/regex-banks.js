@@ -26,6 +26,10 @@ export const actions = {
     let item = await this.$axios.$get(`/api/admin/regex-banks/${id}`)
     commit("setItem", item.data)
   },
+
+  async deleteItem({ commit }, id) {
+    await this.$axios.$delete(`/api/admin/regex-banks/${id}`)
+  },
 }
 
 export const getters = {

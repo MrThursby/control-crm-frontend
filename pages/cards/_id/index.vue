@@ -42,7 +42,7 @@
     </info-list>
 
     <app-btn @click="$router.push(`/cards/${$route.params.id}/edit`)" class="mr-4">Редактировать</app-btn>
-    <app-btn @click="deleteItem" danger>Удалить</app-btn>
+    <app-btn @click="deleteItem" v-if="isAbleTo('cards-delete')" danger>Удалить</app-btn>
   </app-container>
 </template>
 

@@ -20,7 +20,7 @@
     <app-btn v-if="isAbleTo('banks-update')"
              @click="$router.push(`/cards/banks/${$route.params.id}/edit`)"
              class="mr-4">Редактировать</app-btn>
-    <app-btn v-if="isAbleTo('banks-delete')" danger>Удалить</app-btn>
+    <app-btn @click="deleteItem" v-if="isAbleTo('banks-delete')" danger>Удалить</app-btn>
   </app-container>
 </template>
 
@@ -31,7 +31,7 @@ import BreadcrumbsItem from "../../../../components/ui/Breadcrumbs/BreadcrumbsIt
 import InfoItem from "../../../../components/ui/InfoList/InfoItem";
 import InfoList from "../../../../components/ui/InfoList/InfoList";
 import AppBtn from "../../../../components/ui/Buttons/AppBtn";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import InfoCol from "../../../../components/ui/InfoList/InfoCol";
 export default {
   name: "DebitCardsShow",
@@ -42,6 +42,19 @@ export default {
     ...mapGetters({
       bank: 'cards/banks/item'
     })
+  },
+  methods: {
+    ...mapActions({
+      delete: 'cards/banks/deleteItem'
+    }),
+    async deleteItem() {
+      try {
+        await this.delete(this.$route.params.id)
+        await this.$router.push('/cards/banks')
+      } catch(e) {
+        console.log(e);
+      }
+    }
   },
   components: {InfoCol, AppBtn, InfoList, InfoItem, BreadcrumbsItem, BreadcrumbsList, AppContainer}
 }

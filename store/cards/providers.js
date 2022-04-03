@@ -26,6 +26,10 @@ export const actions = {
     let item = await this.$axios.$get(`/api/admin/providers/${id}`)
     commit("setItem", item.data)
   },
+
+  async deleteItem({ commit }, id) {
+    await this.$axios.$delete(`/api/admin/providers/${id}`)
+  },
 }
 
 export const getters = {
