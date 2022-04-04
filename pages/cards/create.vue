@@ -311,7 +311,7 @@ export default {
     }
   },
   mounted() {
-    const api2 = this.projects.findIndex(i => i.id === 1)
+    const api2 = this.projects.data.findIndex(i => i.id === 1)
     if(api2 !== -1) this.project = api2
   },
   computed: {
