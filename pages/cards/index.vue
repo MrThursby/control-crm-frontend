@@ -97,7 +97,7 @@
         </app-table-h-row>
       </app-t-head>
       <app-t-body>
-        <app-table-row class="row" v-for="item of cards.data" :key="item.id">
+        <app-table-row v-for="item of cards.data" :key="item.id">
           <app-table-cell v-show="table_fields.cards.id.show" class="pl-4" center>
             <input v-model="selected_rows"
                    :value="item.id"
@@ -107,10 +107,10 @@
             <span class="span-id">{{ item.id }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.project.show"  nowrap>
-            <app-link :to="`/cards/projects/${item.project.id}`">{{ item.project.title }}</app-link>
+            <app-link v-if="item.project" :to="`/cards/projects/${item.project.id}`">{{ item.project.title }}</app-link>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.bank.show"  nowrap>
-            <app-link :to="`/cards/banks/${item.bank.id}`">{{ item.bank.title }}</app-link>
+            <app-link v-if="item.bank" :to="`/cards/banks/${item.bank.id}`">{{ item.bank.title }}</app-link>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.status.show"  nowrap>
             <cards-table-select
