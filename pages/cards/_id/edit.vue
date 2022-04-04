@@ -353,7 +353,7 @@ export default {
       banks_getter: 'cards/banks/paginator',
     }),
     banks() {
-      if(this.banks_getter.data.findIndex(bank => bank.id === this.item.bank.id) === -1){
+      if(this.banks_getter.data.findIndex(bank => bank.id === this.item.bank_id) === -1 && !!this.item.bank){
         let banks = JSON.parse(JSON.stringify(this.banks_getter))
         banks.data = [this.item.bank, ...banks.data]
         return banks
@@ -361,7 +361,7 @@ export default {
       return this.banks_getter
     },
     projects() {
-      if(this.projects_getter.data.findIndex(project => project.id === this.item.project.id) === -1){
+      if(this.projects_getter.data.findIndex(project => project.id === this.item.project_id) === -1 && !!this.item.project){
         let projects = JSON.parse(JSON.stringify(this.projects_getter))
         projects.data = [this.item.project, ...projects.data]
         return projects
@@ -369,7 +369,7 @@ export default {
       return this.projects_getter
     },
     statuses() {
-      if(this.statuses_getter.data.findIndex(status => status.id === this.item.status.id) === -1){
+      if(this.statuses_getter.data.findIndex(status => status.id === this.item.status_id) === -1 && !!this.item.status){
         let statuses = JSON.parse(JSON.stringify(this.statuses_getter))
         statuses.data = [this.item.status, ...statuses.data]
         return statuses
@@ -377,7 +377,7 @@ export default {
       return this.statuses_getter
     },
     providers() {
-      if(this.providers_getter.data.findIndex(provider => provider.id === this.item.provider.id) === -1){
+      if(this.providers_getter.data.findIndex(provider => provider.id === this.item.provider_id) === -1 && !!this.item.provider){
         let providers = JSON.parse(JSON.stringify(this.providers_getter))
         providers.data = [this.item.provider, ...providers.data]
         return providers
