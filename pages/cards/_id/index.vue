@@ -24,10 +24,10 @@
           </info-col>
           <info-col class="w-1/2">
             <info-item name="Карта">{{ card.card }}</info-item>
-            <info-item name="Статус">{{ card.status.title }}</info-item>
-            <info-item name="Банк">{{ card.bank.title }}</info-item>
-            <info-item name="Поставщик">{{ card.provider.title }}</info-item>
-            <info-item name="Проект">{{ card.project.title }}</info-item>
+            <info-item v-if="card.status" name="Статус">{{ card.status.title }}</info-item>
+            <info-item v-if="card.bank" name="Банк">{{ card.bank.title }}</info-item>
+            <info-item v-if="card.provider" name="Поставщик">{{ card.provider.title }}</info-item>
+            <info-item v-if="card.project" name="Проект">{{ card.project.title }}</info-item>
             <info-item name="Добавлено">{{ $moment(card.created_at).format('LLL') }}</info-item>
           </info-col>
         </div>
