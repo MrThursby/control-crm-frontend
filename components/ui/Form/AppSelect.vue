@@ -19,7 +19,7 @@
         class="font-semibold"
         style="min-width: 8rem;"
         :class="{'uppercase': uppercase}"
-        :style="{color: status_colors[options[value].color || 'default']}"
+        :style="{color: status_colors[options[value] && options[value].color ? options[value].color : 'default']}"
       >{{ options[value].title || '' }}</span>
       <span
         class="transform transition duration-200"

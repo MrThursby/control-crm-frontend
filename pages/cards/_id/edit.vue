@@ -284,19 +284,19 @@ export default {
   mounted() {
     this.form.card = this.item.card
 
-    let provider = this.providers.data.findIndex(provider => provider.id === this.item.provider.id)
+    let provider = this.providers.data.findIndex(provider => provider.id === this.item.provider_id)
     provider = provider === -1 ? 0 : provider
     this.form.provider = provider
 
-    let bank = this.banks.data.findIndex(bank => bank.id === this.item.bank.id)
+    let bank = this.banks.data.findIndex(bank => bank.id === this.item.bank_id)
     bank = bank === -1 ? 0 : bank
     this.form.bank = bank
 
-    let project = this.projects.data.findIndex(project => project.id === this.item.project.id)
+    let project = this.projects.data.findIndex(project => project.id === this.item.project_id)
     project = project === -1 ? 0 : project
     this.form.project = project
 
-    let status = this.statuses.data.findIndex(status => status.id === this.item.status.id)
+    let status = this.statuses.data.findIndex(status => status.id === this.item.status_id)
     status = status === -1 ? 0 : status
     this.form.status = status
 
@@ -397,7 +397,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

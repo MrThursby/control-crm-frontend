@@ -108,9 +108,11 @@
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.project.show"  nowrap>
             <app-link v-if="item.project" :to="`/cards/projects/${item.project.id}`">{{ item.project.title }}</app-link>
+            <p v-else>Не указан</p>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.bank.show"  nowrap>
             <app-link v-if="item.bank" :to="`/cards/banks/${item.bank.id}`">{{ item.bank.title }}</app-link>
+            <p v-else>Не указан</p>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.status.show"  nowrap>
             <cards-table-select
@@ -132,7 +134,8 @@
           <app-table-cell v-show="table_fields.cards.link_photo.show">{{ item.link_photo }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.comment.show"  nowrap>{{ item.comment }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.provider.show" nowrap>
-            <app-link :to="`/cards/providers/${item.provider.id}`">{{ item.provider.title }}</app-link>
+            <app-link v-if="item.provider" :to="`/cards/providers/${item.provider.id}`">{{ item.provider.title }}</app-link>
+            <p v-else>Не указан</p>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.created_at.show" nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
         </app-table-row>
