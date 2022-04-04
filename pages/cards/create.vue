@@ -312,7 +312,8 @@ export default {
   },
   mounted() {
     const api2 = this.projects.data.findIndex(i => i.id === 1)
-    if(api2 !== -1) this.project = api2
+    if(api2 !== -1) this.form.project = api2
+    console.log(api2);
   },
   computed: {
     ...mapGetters({
