@@ -24,6 +24,7 @@
           </info-col>
           <info-col class="w-1/2">
             <info-item name="Карта">{{ card.card }}</info-item>
+            <info-item name="Виртуальная карта">{{ card.virtual_card || 'Не указана' }}</info-item>
             <info-item v-if="card.status" name="Статус">{{ card.status.title }}</info-item>
             <info-item v-if="card.bank" name="Банк">{{ card.bank.title }}</info-item>
             <info-item v-if="card.provider" name="Поставщик">{{ card.provider.title }}</info-item>

@@ -17,7 +17,7 @@
 
       <page-filters-item class="mr-auto">
         <app-select
-          v-model="filters.searchField" 
+          v-model="filters.searchField"
           :options="searchFields"
           @input="() => { if(filters.searchQuery !== '') {this.page = 1; reFetch()} }"
         />
@@ -126,7 +126,8 @@
             <span v-else>{{ item.status.title }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.card.show"  nowrap>
-            <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link>
+            <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link><br />
+            {{ item.virtual_card }}
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.phone.show"  nowrap>{{ item.phone }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.fio.show">{{ item.fio }}</app-table-cell>
@@ -348,7 +349,7 @@ export default {
         page: this.page,
         ...filters
       })
-      
+
       this.$forceUpdate()
     },
     selectAll() {

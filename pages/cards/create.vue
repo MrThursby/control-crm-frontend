@@ -39,6 +39,29 @@
 
         <app-form-group
           class="mb-4"
+          label="Виртуальная карта"
+          :errors="errors.virtual_card"
+          :invalid="errors.virtual_card.length !== 0 || $v.form.virtual_card.$error"
+        >
+          <app-input
+            mask="0000 0000 0000 0000"
+            unmask
+            v-model="form.virtual_card"
+            :invalid="errors.virtual_card.length !== 0 || $v.form.virtual_card.$error"
+            @input="$v.form.virtual_card.$touch"
+          />
+          <template #errors>
+            <app-form-group-error v-if="!$v.form.virtual_card.minLength || !$v.form.virtual_card.maxLength">
+              Поле должно содержать {{ $v.form.virtual_card.$params.minLength.min }} цифр
+            </app-form-group-error>
+            <app-form-group-error v-if="!$v.form.virtual_card.required">
+              Это обязательное поле
+            </app-form-group-error>
+          </template>
+        </app-form-group>
+
+        <app-form-group
+          class="mb-4"
           label="Статус"
           :invalid="errors.status.length !== 0"
           :errors="errors.status"
@@ -238,6 +261,7 @@ export default {
     return {
       form: {
         card: '',
+        virtual_card: '',
         status: 1,
         bank: 0,
         provider: 0,
@@ -252,6 +276,7 @@ export default {
       },
       errors: {
         card: [],
+        virtual_card: [],
         status: [],
         bank: [],
         provider: [],
@@ -269,6 +294,7 @@ export default {
   validations: {
     form: {
       card: {required, minLength: minLength(16), maxLength: maxLength(16)},
+      virtual_card: {required, minLength: minLength(16), maxLength: maxLength(16)},
       fio: {required},
       phone: {required},
       login: {required},
@@ -286,6 +312,7 @@ export default {
 
       let formData = new FormData()
       formData.append('card', this.form.card)
+      formData.append('virtual_card', this.form.virtual_card)
       formData.append('fio', this.form.fio)
       formData.append('phone', this.form.phone)
       formData.append('login', this.form.login)
