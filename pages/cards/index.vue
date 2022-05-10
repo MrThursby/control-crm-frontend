@@ -126,8 +126,8 @@
             <span v-else>{{ item.status.title }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.card.show"  nowrap>
-            <app-link :to="`/cards/${item.id}`">{{ item.card }}</app-link><br />
-            {{ item.virtual_card }}
+            <app-link title="Физическая карта" :to="`/cards/${item.id}`">{{ item.card }}</app-link><br />
+            <span title="Виртуальная карта">{{ item.virtual_card }}</span>
           </app-table-cell>
           <app-table-cell v-show="table_fields.cards.phone.show"  nowrap>{{ item.phone }}</app-table-cell>
           <app-table-cell v-show="table_fields.cards.fio.show">{{ item.fio }}</app-table-cell>
@@ -289,8 +289,9 @@ export default {
       { id: 0, value: null, title: 'Все поля' },
       { id: 1, value: 'phone', title: 'Номер телефона' },
       { id: 2, value: 'card', title: 'Номер карты' },
-      { id: 3, value: 'fio', title: 'ФИО' },
-      { id: 4, value: 'id', title: '#' },
+      { id: 3, value: 'virtual_card', title: 'Номер виртуальной карты' },
+      { id: 4, value: 'fio', title: 'ФИО' },
+      { id: 5, value: 'id', title: '#' },
     ],
     selected_rows: [],
     show_settings: false,

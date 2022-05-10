@@ -5,6 +5,7 @@
     :is="tag"
     :to="to"
     :href="to"
+    :title="title"
   >
     <slot />
   </component>
@@ -17,6 +18,7 @@ export default {
     tag: { type: String, default: 'nuxt-link' },
     to: { type: String, default: '' },
     variant: { type: String, default: 'primary' },
+    title: { type: String },
   }
 }
 </script>
