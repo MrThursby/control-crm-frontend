@@ -294,7 +294,7 @@ export default {
   validations: {
     form: {
       card: {required, minLength: minLength(16), maxLength: maxLength(16)},
-      virtual_card: {required, minLength: minLength(16), maxLength: maxLength(16)},
+      virtual_card: {minLength: minLength(16), maxLength: maxLength(16)},
       fio: {required},
       phone: {required},
       login: {required},

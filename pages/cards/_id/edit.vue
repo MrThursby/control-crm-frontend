@@ -42,7 +42,7 @@
 
         <app-form-group
           class="mb-4"
-          label="Карта"
+          label="Виртуальная карта"
           :errors="errors.virtual_card"
           :invalid="errors.virtual_card.length !== 0 || $v.form.virtual_card.$error"
         >
@@ -299,7 +299,7 @@ export default {
   validations: {
     form: {
       card: {required, minLength: minLength(16), maxLength: maxLength(16)},
-      virtual_card: {required, minLength: minLength(16), maxLength: maxLength(16)},
+      virtual_card: {minLength: minLength(16), maxLength: maxLength(16)},
       fio: {required},
       phone: {required},
       login: {required},
