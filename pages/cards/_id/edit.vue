@@ -343,9 +343,10 @@ export default {
         return false;
       }
 
-      let formData = new URLSearchParams()
+      let formData = new FormData()
+      formData.append('_method', 'PUT')
       formData.append('card', this.form.card)
-      formData.append('virtual_card', this.form.virtual_card)
+      formData.append('virtual_card', this.form.virtual_card || '')
       formData.append('fio', this.form.fio)
       formData.append('phone', this.form.phone)
       formData.append('login', this.form.login)
@@ -359,7 +360,7 @@ export default {
       formData.append('provider_id', this.providers.data[this.form.provider].id)
       formData.append('project_id', this.projects.data[this.form.project].id)
 
-      await this.$axios.$put(`/api/admin/cards/${this.$route.params.id}`, formData, {
+      await this.$axios.$post(`/api/admin/cards/${this.$route.params.id}`, formData, {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       })
         .then(r => {
