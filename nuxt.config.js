@@ -3,14 +3,14 @@ require("dotenv").config();
 export default {
   server: {
     host: '0.0.0.0',
-    port: 3000,
+    port: 3000
   },
   // mode: 'spa',
   loading: {
     color: '#6556ff',
     height: '4px',
     duration: 5000,
-    continuous: true,
+    continuous: true
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -62,13 +62,13 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/fontawesome',
     '@nuxtjs/dotenv',
-    '@nuxtjs/recaptcha',
+    '@nuxtjs/recaptcha'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
-    credentials: true,
+    credentials: true
   },
 
   recaptcha: {
@@ -85,7 +85,7 @@ export default {
     },
     '/auth': {
       target: `${process.env.API_URL}/`,
-      changeOrigin: process.env.CHANGE_ORIGIN,
+      changeOrigin: process.env.CHANGE_ORIGIN
     }
   },
 
@@ -94,7 +94,7 @@ export default {
       login: '/login',
       logout: '/login',
       callback: '/login',
-      home: '/'
+      home: '/cards'
     },
     strategies: {
       local: {
@@ -106,12 +106,12 @@ export default {
         },
         refreshToken: {
           property: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 10, // 10 days 
+          maxAge: 60 * 60 * 24 * 10, // 10 days
           global: true
         },
         endpoints: {
           login: { url: '/auth/login', method: 'post' },
-          refresh: { url: '/auth/refresh-token', method: 'post',/*  property: 'token' */ },
+          refresh: { url: '/auth/refresh-token', method: 'post' },
           user: { url: '/api/profile', method: 'get', property: 'user' },
           logout: { url: '/auth/logout', method: 'post' }
         }

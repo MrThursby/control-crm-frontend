@@ -138,7 +138,7 @@
             <app-link v-if="item.provider" :to="`/cards/providers/${item.provider.id}`">{{ item.provider.title }}</app-link>
             <p v-else>Не указан</p>
           </app-table-cell>
-          <app-table-cell v-show="table_fields.cards.created_at.show" nowrap>{{ $moment(item.created_at).format('LLL') }}</app-table-cell>
+          <app-table-cell v-show="table_fields.cards.created_at.show" nowrap>{{ $moment(item.created_at).format('lll') }}</app-table-cell>
         </app-table-row>
       </app-t-body>
     </app-table>

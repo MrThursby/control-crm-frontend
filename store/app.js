@@ -1,9 +1,6 @@
 export const state = () => ({
   menu: [
-    { to: '/', title: 'Консоль', icon: ['fas', 'house'], exact: true, permission: null },
     { to: '/cards', title: 'Дебетовые карты', icon: ['fas', 'credit-card'], exact: false, permission: 'cards-read' },
-    { to: '/phones', title: 'Номера телефонов', icon: ['fa', 'sim-card'], exact: false, permission: 'phones-read' },
-    { to: '/exchanges', title: 'Обмены', icon: ['fa', 'arrow-right-arrow-left'], exact: false, permission: 'exchanges-read' },
     { to: '/users', title: 'Польщователи', icon: ['fa', 'user'], exact: false, permission: 'users-panel-read' },
     { to: '/audit', title: 'Лог', icon: ['fa', 'file-lines'], exact: false, permission: 'exchanges-read' },
   ],

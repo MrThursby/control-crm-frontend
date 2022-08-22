@@ -5,10 +5,10 @@
       to="/cards"
       exact
     >Дебетовые карты</page-nav-item>
-    <page-nav-item
-      v-if="isAbleTo('financial-log-read')"
-      to="/cards/financial-log"
-    >Финансовый лог</page-nav-item>
+<!--    <page-nav-item-->
+<!--      v-if="isAbleTo('financial-log-read')"-->
+<!--      to="/cards/financial-log"-->
+<!--    >Финансовый лог</page-nav-item>-->
     <page-nav-item
       v-if="isAbleTo('banks-read')"
       to="/cards/banks"

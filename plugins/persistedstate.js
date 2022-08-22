@@ -4,7 +4,7 @@ import cookie from 'cookie'
 
 export default ({store, req}) => {
   createPersistedState({
-    key: 'ccrm-v01042022',
+    key: 'ccrm-wp-v22082022',
     paths: ['persisted'],
     storage: {
       getItem: key => process.client ? Cookies.get(key) : cookie.parse(req.headers.cookie||'')[key],

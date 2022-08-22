@@ -65,8 +65,6 @@ export default {
           }
         })
       } catch (e) {
-        console.log(e)
-
         if (e.response && (e.response.status === 404 || e.response.status === 403)) {
           this.error = 'Неверный логин или пароль'
         }
