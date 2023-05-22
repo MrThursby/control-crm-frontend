@@ -190,18 +190,13 @@
           class="mb-4"
           label="Кодовое слово"
           :errors="errors.codeword"
-          :invalid="errors.codeword.length !== 0 || $v.form.codeword.$error"
+          :invalid="errors.codeword.length !== 0"
         >
           <app-input
             v-model="form.codeword"
-            :invalid="errors.codeword.length !== 0 || $v.form.codeword.$error"
+            :invalid="errors.codeword.length !== 0"
             @input="$v.form.codeword.$touch"
           />
-          <template #errors>
-            <app-form-group-error v-if="!$v.form.codeword.required">
-              Это обязательное поле
-            </app-form-group-error>
-          </template>
         </app-form-group>
 
         <app-form-group
@@ -299,7 +294,6 @@ export default {
       phone: {required},
       login: {required},
       password_ib: {required},
-      codeword: {required}
     }
   },
   methods: {
