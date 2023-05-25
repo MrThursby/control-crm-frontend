@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="$emit('submit')" class="relative">
     <fa-icon
-      class="absolute h-full w-4 mx-4 text-sm transition duration-150"
+      class="absolute h-full w-4 m-4 text-sm transition duration-150"
       :class="{
               'text-light': focused,
               'text-primary': !focused,
