@@ -195,7 +195,6 @@
           <app-input
             v-model="form.codeword"
             :invalid="errors.codeword.length !== 0"
-            @input="$v.form.codeword.$touch"
           />
         </app-form-group>
 
@@ -332,9 +331,9 @@ export default {
     }
   },
   mounted() {
-    const api2 = this.projects.data.findIndex(i => i.id === 1)
-    if(api2 !== -1) this.form.project = api2
-    console.log(api2);
+    const apiV1 = this.projects.data.findIndex(i => i.id === 2)
+    if(apiV1 !== -1) this.form.project = apiV1
+    console.log(apiV1);
   },
   computed: {
     ...mapGetters({

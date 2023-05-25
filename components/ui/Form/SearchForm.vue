@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="$emit('submit')" class="relative">
     <fa-icon
-      class="absolute h-full mx-4 text-sm pt-px transition duration-150"
+      class="absolute h-full w-4 mx-4 text-sm transition duration-150"
       :class="{
               'text-light': focused,
               'text-primary': !focused,
@@ -46,7 +46,3 @@ export default {
   components: {AppInput}
 }
 </script>
-
-<style scoped>
-
-</style>

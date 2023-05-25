@@ -106,7 +106,7 @@ export default {
         },
         refreshToken: {
           property: 'refresh_token',
-          maxAge: 60 * 60 * 24 * 10, // 10 days 
+          maxAge: 60 * 60 * 24 * 10, // 10 days
           global: true
         },
         endpoints: {
